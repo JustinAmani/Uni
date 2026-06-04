@@ -681,120 +681,93 @@ require_once __DIR__ . '/../includes/navbar.php';
     <!-- ═══════ STEP 3: Education ════════════════════════════════════════════ -->
     <form method="POST" action="<?= APP_URL ?>/application_form/index.php" novalidate id="stepForm">
         <input type="hidden" name="step" value="3">
-
-        <!-- 3a: Secondary Schools -->
         <div class="card shadow-sm border-0 mb-3">
             <div class="card-header udm-card-header-form">
-                <h6 class="mb-0"><i class="bi bi-building me-1"></i>
-                    3a. Secondary Schools / Educational Institutions Attended</h6>
+                <h6 class="mb-0"><i class="bi bi-mortarboard me-1"></i> Step 3: Education Details</h6>
             </div>
             <div class="card-body">
-            <div class="section-block">
-                <div class="table-responsive">
-                    <table class="table table-bordered align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Institution</th>
-                                <th class="text-center" colspan="2">Entered</th>
-                                <th class="text-center" colspan="2">Left</th>
-                            </tr>
-                            <tr>
-                                <th></th>
-                                <th>Month</th><th>Year</th>
-                                <th>Month</th><th>Year</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <?php foreach ($schools as $i => $s): ?>
-                            <tr>
-                                <td>
-                                    <input type="text" name="school_name[]" class="form-control form-control-sm"
-                                           value="<?= e($s['institution_name'] ?? '') ?>" maxlength="255">
-                                </td>
-                                <?php foreach ([['entered_month','entered_year'],['left_month','left_year']] as [$mKey,$yKey]): ?>
-                                <td>
-                                    <select name="<?= $mKey ?>[]" class="form-select form-select-sm">
-                                        <option value="0">--</option>
-                                        <?php foreach (MONTHS as $num => $name): ?>
-                                            <option value="<?= $num ?>" <?= ($s[$mKey] ?? 0) == $num ? 'selected' : '' ?>>
-                                                <?= $name ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select name="<?= $yKey ?>[]" class="form-select form-select-sm">
-                                        <option value="0">--</option>
-                                        <?php for ($y = $currentYear; $y >= 1990; $y--): ?>
-                                            <option value="<?= $y ?>" <?= ($s[$yKey] ?? 0) == $y ? 'selected' : '' ?>>
-                                                <?= $y ?>
-                                            </option>
-                                        <?php endfor; ?>
-                                    </select>
-                                </td>
-                                <?php endforeach; ?>
-                            </tr>
+
+                <!-- 3a: Secondary Schools -->
+                <div class="section-block">
+                    <h6 class="section-label">Secondary Schools / Educational Institutions Attended</h6>
+                    <div class="row g-2 mb-1 d-none d-md-flex">
+                        <div class="col-md-5"><small class="fw-semibold text-muted">Institution</small></div>
+                        <div class="col-md-4 text-center"><small class="fw-semibold text-muted">Entered (Month / Year)</small></div>
+                        <div class="col-md-3 text-center"><small class="fw-semibold text-muted">Left (Month / Year)</small></div>
+                    </div>
+                    <?php foreach ($schools as $i => $s): ?>
+                    <div class="row g-2 mb-2 align-items-center">
+                        <div class="col-md-5">
+                            <input type="text" name="school_name[]" class="form-control"
+                                   value="<?= e($s['institution_name'] ?? '') ?>"
+                                   placeholder="Institution name" maxlength="255">
+                        </div>
+                        <?php foreach ([['entered_month','entered_year','Entered'],['left_month','left_year','Left']] as [$mKey,$yKey,$lbl]): ?>
+                        <div class="col-md-<?= ($lbl === 'Entered') ? '4' : '3' ?>">
+                            <div class="d-flex gap-1">
+                                <select name="<?= $mKey ?>[]" class="form-select">
+                                    <option value="0">Month</option>
+                                    <?php foreach (MONTHS as $num => $name): ?>
+                                        <option value="<?= $num ?>" <?= ($s[$mKey] ?? 0) == $num ? 'selected' : '' ?>>
+                                            <?= $name ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <select name="<?= $yKey ?>[]" class="form-select">
+                                    <option value="0">Year</option>
+                                    <?php for ($y = $currentYear; $y >= 1990; $y--): ?>
+                                        <option value="<?= $y ?>" <?= ($s[$yKey] ?? 0) == $y ? 'selected' : '' ?>>
+                                            <?= $y ?>
+                                        </option>
+                                    <?php endfor; ?>
+                                </select>
+                            </div>
+                        </div>
                         <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                    </div>
+                    <?php endforeach; ?>
                 </div>
-            </div><!-- /section-block 3a -->
-            </div>
-        </div>
 
-        <!-- 3b: O-Level Results -->
-        <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header-form">
-                <h6 class="mb-0"><i class="bi bi-journal-text me-1"></i> 3b. SC / GCE "O" Level Results</h6>
-            </div>
-            <div class="card-body">
-            <div class="section-block">
-                <?php echo renderResultsTable('o', $oResults, 'o_subject', ['o_a1_month','o_a1_grade','o_a2_month','o_a2_grade','o_a3_month','o_a3_grade'], $currentYear); ?>
-            </div>
-            </div><!-- /card-body 3b -->
-        </div>
-
-        <!-- 3c: A-Level Results -->
-        <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header-form">
-                <h6 class="mb-0"><i class="bi bi-journal-text me-1"></i> 3c. HSC / GCE "A" Level Results</h6>
-            </div>
-            <div class="card-body">
-            <div class="section-block">
-                <h6 class="text-muted small fw-semibold mb-2">PRINCIPAL / ADVANCED LEVEL</h6>
-                <?php echo renderResultsTable('ap', $principal, 'a_principal_subject', ['ap_a1_month','ap_a1_grade','ap_a2_month','ap_a2_grade','ap_a3_month','ap_a3_grade'], $currentYear, 3); ?>
-                <h6 class="text-muted small fw-semibold mt-3 mb-2">SUBSIDIARY LEVEL</h6>
-                <?php echo renderResultsTable('as', $subsidiary, 'a_subsidiary_subject', ['as_a1_month','as_a1_grade','as_a2_month','as_a2_grade','as_a3_month','as_a3_grade'], $currentYear, 4); ?>
-            </div>
-            </div><!-- /card-body 3c -->
-        </div>
-
-        <!-- 3d: Language Certificate -->
-        <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header-form">
-                <h6 class="mb-0"><i class="bi bi-translate me-1"></i> 3d. Language Certificate <span class="badge bg-danger ms-1">Mandatory</span></h6>
-            </div>
-            <div class="card-body">
-            <div class="section-block">
-                <p class="text-muted small mb-2">Check as appropriate and attach certificate when uploading documents.</p>
-                <div class="form-check mb-2">
-                    <input class="form-check-input" type="checkbox" id="engCert" name="has_english_cert"
-                           value="1" <?= !empty($app['has_english_cert']) ? 'checked' : '' ?>>
-                    <label class="form-check-label" for="engCert">
-                        English – IELTS Certificate (Academic Version) <strong>OR</strong> TOEFL Certificate
-                    </label>
+                <!-- 3b: O-Level Results -->
+                <div class="section-block">
+                    <h6 class="section-label">SC / GCE "O" Level Results</h6>
+                    <?= renderResultsGrid($oResults, 'o_subject', ['o_a1_month','o_a1_grade','o_a2_month','o_a2_grade','o_a3_month','o_a3_grade'], 10) ?>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="frCert" name="has_french_cert"
-                           value="1" <?= !empty($app['has_french_cert']) ? 'checked' : '' ?>>
-                    <label class="form-check-label" for="frCert">
-                        French – DELF Certificate B2
-                    </label>
-                </div>
-            </div>
-            </div><!-- /card-body 3d -->
-        </div>
 
+                <!-- 3c: A-Level Results -->
+                <div class="section-block">
+                    <h6 class="section-label">HSC / GCE "A" Level Results</h6>
+                    <p class="text-muted small fw-semibold mb-2 text-uppercase">Principal / Advanced Level</p>
+                    <?= renderResultsGrid($principal, 'a_principal_subject', ['ap_a1_month','ap_a1_grade','ap_a2_month','ap_a2_grade','ap_a3_month','ap_a3_grade'], 3) ?>
+                    <p class="text-muted small fw-semibold mt-3 mb-2 text-uppercase">Subsidiary Level</p>
+                    <?= renderResultsGrid($subsidiary, 'a_subsidiary_subject', ['as_a1_month','as_a1_grade','as_a2_month','as_a2_grade','as_a3_month','as_a3_grade'], 4) ?>
+                </div>
+
+                <!-- 3d: Language Certificate -->
+                <div class="section-block">
+                    <h6 class="section-label">
+                        Language Certificate
+                        <span class="badge bg-danger ms-1" style="font-size:.6rem;text-transform:none;letter-spacing:0">Mandatory</span>
+                    </h6>
+                    <p class="text-muted small mb-3">Check as appropriate and attach certificate when uploading documents.</p>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="engCert" name="has_english_cert"
+                               value="1" <?= !empty($app['has_english_cert']) ? 'checked' : '' ?>>
+                        <label class="form-check-label" for="engCert">
+                            English – IELTS Certificate (Academic Version) <strong>OR</strong> TOEFL Certificate
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="frCert" name="has_french_cert"
+                               value="1" <?= !empty($app['has_french_cert']) ? 'checked' : '' ?>>
+                        <label class="form-check-label" for="frCert">
+                            French – DELF Certificate B2
+                        </label>
+                    </div>
+                </div>
+
+            </div><!-- /card-body step 3 -->
+        </div>
         <?php include __DIR__ . '/partials/form_buttons.php'; ?>
     </form>
 
@@ -1038,41 +1011,43 @@ require_once __DIR__ . '/../includes/footer.php';
 
 <?php
 /**
- * Renders a results table for O/A-Level subjects.
+ * Renders O/A-Level results as a Bootstrap grid (no HTML table).
  */
-function renderResultsTable(string $prefix, array $rows, string $subjName, array $colNames, int $currentYear, int $count = 10): string {
-    $html = '<div class="table-responsive"><table class="table table-bordered table-sm align-middle">';
-    $html .= '<thead class="table-light"><tr>';
-    $html .= '<th style="min-width:180px">Subject</th>';
-    $html .= '<th colspan="2" class="text-center">1st Attempt</th>';
-    $html .= '<th colspan="2" class="text-center">2nd Attempt</th>';
-    $html .= '<th colspan="2" class="text-center">3rd Attempt</th>';
-    $html .= '</tr><tr><th></th>';
-    for ($a = 1; $a <= 3; $a++) {
-        $html .= '<th class="text-center small">Month/Year</th><th class="text-center small">Grade</th>';
-    }
-    $html .= '</tr></thead><tbody>';
+function renderResultsGrid(array $rows, string $subjName, array $colNames, int $count = 10): string {
+    $html  = '<div class="row g-2 mb-1 d-none d-md-flex">';
+    $html .= '<div class="col-md-3"><small class="fw-semibold text-muted">Subject</small></div>';
+    $html .= '<div class="col"><small class="fw-semibold text-muted">1st Attempt <span class="text-muted">(MM/YYYY + Grade)</span></small></div>';
+    $html .= '<div class="col"><small class="fw-semibold text-muted">2nd Attempt</small></div>';
+    $html .= '<div class="col"><small class="fw-semibold text-muted">3rd Attempt</small></div>';
+    $html .= '</div>';
 
     for ($i = 0; $i < $count; $i++) {
-        $r = $rows[$i] ?? [];
-        $html .= '<tr>';
-        $html .= '<td><input type="text" name="' . $subjName . '[]" class="form-control form-control-sm"
-                       value="' . htmlspecialchars($r['subject_name'] ?? '', ENT_QUOTES) . '" maxlength="255"></td>';
+        $r       = $rows[$i] ?? [];
+        $subjVal = htmlspecialchars($r['subject_name'] ?? '', ENT_QUOTES);
+
+        $html .= '<div class="row g-2 mb-2 align-items-center">';
+        $html .= '<div class="col-md-3"><input type="text" name="' . $subjName . '[]"'
+               . ' class="form-control form-control-sm" value="' . $subjVal . '"'
+               . ' maxlength="255" placeholder="Subject"></div>';
+
         for ($a = 1; $a <= 3; $a++) {
-            $mKey = "attempt{$a}_month";
-            $gKey = "attempt{$a}_grade";
-            $mName = $colNames[($a-1)*2];
-            $gName = $colNames[($a-1)*2+1];
-            $mVal = htmlspecialchars($r[$mKey] ?? '', ENT_QUOTES);
-            $gVal = htmlspecialchars($r[$gKey] ?? '', ENT_QUOTES);
-            $html .= '<td><input type="text" name="' . $mName . '[]" placeholder="MM/YYYY"
-                           class="form-control form-control-sm" value="' . $mVal . '" maxlength="7"></td>';
-            $html .= '<td><input type="text" name="' . $gName . '[]" placeholder="A"
-                           class="form-control form-control-sm" value="' . $gVal . '" maxlength="5"></td>';
+            $mKey  = "attempt{$a}_month";
+            $gKey  = "attempt{$a}_grade";
+            $mName = $colNames[($a - 1) * 2];
+            $gName = $colNames[($a - 1) * 2 + 1];
+            $mVal  = htmlspecialchars($r[$mKey] ?? '', ENT_QUOTES);
+            $gVal  = htmlspecialchars($r[$gKey] ?? '', ENT_QUOTES);
+
+            $html .= '<div class="col"><div class="input-group input-group-sm">'
+                   . '<input type="text" name="' . $mName . '[]" placeholder="MM/YYYY"'
+                   . ' class="form-control form-control-sm" value="' . $mVal . '" maxlength="7">'
+                   . '<input type="text" name="' . $gName . '[]" placeholder="A"'
+                   . ' class="form-control form-control-sm" value="' . $gVal . '" maxlength="5"'
+                   . ' style="max-width:58px">'
+                   . '</div></div>';
         }
-        $html .= '</tr>';
+        $html .= '</div>';
     }
-    $html .= '</tbody></table></div>';
     return $html;
 }
 ?>
