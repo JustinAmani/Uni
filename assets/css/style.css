@@ -1,0 +1,215 @@
+/* ── UdM Application Portal – Custom Styles ─────────────────────────────── */
+
+:root {
+    --udm-primary:   #0d8c7a;
+    --udm-primary-d: #0a6e60;
+    --udm-hero:      #12b09a;
+    --udm-navy:      #1a3a5c;
+    --udm-light:     #f0faf8;
+    --udm-border:    #c8e8e2;
+}
+
+/* ── Navbar ─────────────────────────────────────────────────────────────── */
+.udm-navbar {
+    background: linear-gradient(135deg, var(--udm-primary-d), var(--udm-primary));
+    box-shadow: 0 2px 8px rgba(0,0,0,.18);
+    padding: .55rem 1rem;
+    min-height: 64px;
+}
+
+.udm-brand-name {
+    color: #fff;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    line-height: 1.2;
+}
+
+.udm-tagline {
+    color: rgba(255,255,255,.72);
+    font-size: .65rem;
+    letter-spacing: .06em;
+    font-style: italic;
+}
+
+/* ── Hero Banner ────────────────────────────────────────────────────────── */
+.udm-hero {
+    background: linear-gradient(135deg, var(--udm-hero), var(--udm-primary-d));
+    color: #fff;
+}
+
+.udm-hero h2     { font-size: 1.55rem; }
+.udm-hero p      { font-size: .95rem; }
+.udm-hero a      { color: #fff; text-decoration: underline; }
+
+.role-btn {
+    border-color: rgba(255,255,255,.55);
+    transition: all .2s;
+}
+.role-btn:hover, .role-btn.active {
+    background: rgba(255,255,255,.18);
+    border-color: #fff;
+    color: #fff;
+}
+
+/* ── Cards ──────────────────────────────────────────────────────────────── */
+.udm-card-header {
+    background: linear-gradient(135deg, var(--udm-primary), var(--udm-hero));
+    color: #fff;
+    border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0 !important;
+}
+
+.udm-card-header .nav-link         { color: rgba(255,255,255,.75); border: none; }
+.udm-card-header .nav-link.active  { color: #fff; font-weight: 600; border-bottom: 2px solid #fff; background: transparent; }
+.udm-card-header .nav-link:hover   { color: #fff; }
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+.btn-udm-primary {
+    background: var(--udm-primary);
+    border-color: var(--udm-primary);
+    color: #fff;
+    font-weight: 500;
+    transition: background .2s, border-color .2s;
+}
+.btn-udm-primary:hover, .btn-udm-primary:focus {
+    background: var(--udm-primary-d);
+    border-color: var(--udm-primary-d);
+    color: #fff;
+}
+
+.bg-udm  { background-color: var(--udm-primary) !important; }
+.text-udm { color: var(--udm-primary) !important; }
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+.udm-footer {
+    background: var(--udm-primary-d);
+    color: rgba(255,255,255,.85);
+}
+.udm-footer a { color: #a8e8de; text-decoration: none; }
+.udm-footer a:hover { color: #fff; text-decoration: underline; }
+
+/* ── Stepper ────────────────────────────────────────────────────────────── */
+.udm-stepper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    padding: 0 1rem;
+    overflow-x: auto;
+}
+
+.stepper-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.stepper-line {
+    flex: 1;
+    height: 2px;
+    background: #dee2e6;
+    margin-top: 19px;
+    min-width: 28px;
+    max-width: 60px;
+    transition: background .3s;
+}
+.stepper-line.filled { background: var(--udm-primary); }
+
+.stepper-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: .9rem;
+    border: 2px solid transparent;
+    text-decoration: none;
+    transition: all .2s;
+}
+
+.stepper-circle.done {
+    background: var(--udm-primary);
+    color: #fff;
+    border-color: var(--udm-primary);
+}
+.stepper-circle.current {
+    background: #fff;
+    color: var(--udm-primary);
+    border-color: var(--udm-primary);
+    box-shadow: 0 0 0 4px rgba(13,140,122,.15);
+}
+.stepper-circle.pending {
+    background: #f8f9fa;
+    color: #adb5bd;
+    border-color: #dee2e6;
+    pointer-events: none;
+}
+.stepper-circle.done:hover { background: var(--udm-primary-d); }
+
+.stepper-label {
+    font-size: .65rem;
+    color: #6c757d;
+    margin-top: 4px;
+    text-align: center;
+    white-space: nowrap;
+}
+.stepper-item.current .stepper-label {
+    color: var(--udm-primary);
+    font-weight: 600;
+}
+.stepper-item.done .stepper-label { color: var(--udm-primary); }
+
+/* ── Form sections ──────────────────────────────────────────────────────── */
+.section-label {
+    font-size: .8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--udm-primary);
+    padding-bottom: .35rem;
+    border-bottom: 2px solid var(--udm-border);
+    margin-bottom: 1rem;
+}
+
+/* ── Document upload cards ──────────────────────────────────────────────── */
+.doc-upload-card {
+    background: #fafafa;
+    transition: border-color .2s;
+}
+.doc-upload-card:hover { border-color: var(--udm-primary) !important; }
+
+/* ── Payment summary box ────────────────────────────────────────────────── */
+.payment-summary {
+    background: var(--udm-light);
+    border-color: var(--udm-border) !important;
+}
+
+/* ── Declaration box ────────────────────────────────────────────────────── */
+.declaration-box {
+    background: var(--udm-light);
+    border-color: var(--udm-border) !important;
+    font-size: .93rem;
+    line-height: 1.7;
+}
+
+/* ── Agent dashboard stat cards ─────────────────────────────────────────── */
+.stat-card {
+    transition: transform .15s, box-shadow .15s;
+}
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,.1) !important;
+}
+
+/* ── Misc ───────────────────────────────────────────────────────────────── */
+.password-strength { min-height: 20px; }
+
+@media (max-width: 576px) {
+    .udm-stepper { justify-content: flex-start; }
+    .stepper-label { display: none; }
+    .stepper-circle { width: 32px; height: 32px; font-size: .8rem; }
+    .stepper-line { min-width: 16px; margin-top: 15px; }
+}

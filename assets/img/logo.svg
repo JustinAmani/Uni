@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 90" width="80" height="90">
+  <!-- Shield shape -->
+  <path d="M40 4 L72 18 L72 52 Q72 72 40 86 Q8 72 8 52 L8 18 Z"
+        fill="#0d8c7a" stroke="#0a6e60" stroke-width="2"/>
+  <!-- Inner shield highlight -->
+  <path d="M40 12 L64 23 L64 50 Q64 67 40 79 Q16 67 16 50 L16 23 Z"
+        fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+  <!-- "M" letter -->
+  <text x="40" y="56" text-anchor="middle" font-family="Georgia,serif"
+        font-size="34" font-weight="bold" fill="#ffffff">M</text>
+  <!-- Stars / decoration -->
+  <circle cx="26" cy="30" r="2.5" fill="rgba(255,255,255,0.6)"/>
+  <circle cx="54" cy="30" r="2.5" fill="rgba(255,255,255,0.6)"/>
+</svg>
