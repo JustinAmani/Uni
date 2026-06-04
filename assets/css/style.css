@@ -179,32 +179,27 @@ body { background: var(--udm-blue-bg); color: #333; }
 /* ────────────────── Form page ───────────────────────────────────────────── */
 .app-form-page { background: var(--udm-blue-bg); }
 
-/* ALL card bodies = sky-blue background */
+/* Card body = white (plain background, no colour behind sections) */
 .app-form-page .card > .card-body {
-    background: var(--udm-blue-light);
+    background: #ffffff;
     border-radius: 0 0 10px 10px;
+    padding: 1rem;
 }
 
-/* ── Section block (white panel inside sky-blue card-body) ───────────────── */
+/* ── Section block = sky-blue (was white, now has the blue) ──────────────── */
 .section-block {
-    background: #ffffff;
+    background: var(--udm-blue-light);
     border: 1px solid var(--udm-border);
     border-radius: 8px;
     padding: .9rem 1rem 1rem;
     margin-bottom: 1rem;
 }
 .section-block:last-child { margin-bottom: 0; }
+.section-block:hover      { border-color: var(--udm-blue); }
 
-/* section-blocks that are DIRECT children of card-body */
-.app-form-page .card > .card-body > .section-block {
-    background: #ffffff;
-    border: 1px solid var(--udm-border);
-    border-radius: 8px;
-}
-
-/* ── record-block (white panel – employment, docs, declaration) ────────── */
+/* ── record-block = sky-blue (employment, docs, declaration) ─────────────── */
 .record-block {
-    background: #ffffff;
+    background: var(--udm-blue-light);
     border: 1px solid var(--udm-border);
     border-radius: 8px;
     padding: .85rem 1rem 1rem;
@@ -214,8 +209,10 @@ body { background: var(--udm-blue-bg); color: #333; }
 .record-block:last-child { margin-bottom: 0; }
 .record-block:hover      { border-color: var(--udm-blue); }
 
+/* Direct card-body children inherit the same look */
+.app-form-page .card > .card-body > .section-block,
 .app-form-page .card > .card-body > .record-block {
-    background: #ffffff;
+    background: var(--udm-blue-light);
     border: 1px solid var(--udm-border);
     border-radius: 8px;
 }
@@ -242,7 +239,7 @@ body { background: var(--udm-blue-bg); color: #333; }
 
 /* ── Document upload cards ───────────────────────────────────────────────── */
 .doc-upload-card {
-    background: #ffffff;
+    background: var(--udm-blue-light);
     border: 1px solid var(--udm-border) !important;
     border-radius: 8px;
     padding: .85rem !important;
@@ -251,6 +248,14 @@ body { background: var(--udm-blue-bg); color: #333; }
 .doc-upload-card:hover {
     border-color: var(--udm-blue) !important;
     box-shadow: 0 2px 8px rgba(26,111,168,.1);
+}
+
+/* Inputs inside blue blocks keep a white background for legibility */
+.section-block .form-control,
+.section-block .form-select,
+.record-block  .form-control,
+.record-block  .form-select {
+    background-color: #ffffff;
 }
 
 /* ── Declaration & Payment ───────────────────────────────────────────────── */
