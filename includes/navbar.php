@@ -12,7 +12,7 @@ $navRight   = $navRight   ?? '';
 
     <!-- Logo -->
     <a href="<?= $navHomeUrl ?>" class="d-flex align-items-center text-decoration-none">
-        <img src="<?= APP_URL ?>/assets/img/udm-logo.jpg"
+        <img src="<?= APP_URL ?>/assets/img/udm-logo.png"
              alt="Université des Mascareignes"
              class="udm-logo-img">
     </a>
