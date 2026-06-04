@@ -216,20 +216,26 @@ body {
 }
 /* Keep existing udm-card-header for auth cards */
 
-/* Section labels – sky-blue block, NO separator line, matching UdM blue */
+/* Full section block – sky-blue background, rounded all 4 corners */
+.section-block {
+    background: var(--udm-blue-light);
+    border-radius: 10px;
+    padding: .9rem 1rem 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Section label – just the title inside the block, no own background */
 .section-label {
     display: block;
-    width: 100%;
-    font-size: .7rem;
+    font-size: .68rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .07em;
     color: var(--udm-blue);
-    background: var(--udm-blue-light);
-    padding: .42rem .85rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    border: none;        /* no bottom line */
+    margin-bottom: .75rem;
+    padding: 0;
+    border: none;
+    background: transparent;
 }
 
 /* Input focus ring */

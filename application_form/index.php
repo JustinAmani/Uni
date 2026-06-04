@@ -393,6 +393,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                 <h6 class="mb-0"><i class="bi bi-person me-1"></i> Step 1: Personal Information</h6>
             </div>
             <div class="card-body">
+                <div class="section-block">
                 <h6 class="section-label">Personal Details</h6>
                 <div class="row g-3">
                     <div class="col-md-2">
@@ -485,9 +486,10 @@ require_once __DIR__ . '/../includes/navbar.php';
                                value="<?= e($app['home_number'] ?? '') ?>" maxlength="30">
                     </div>
                 </div>
+                </div><!-- /section-block Personal Details -->
 
-                <hr class="my-3">
-                <h6 class="section-label">Permanent Address <small class="text-muted">(in country of origin)</small></h6>
+                <div class="section-block">
+                <h6 class="section-label">Permanent Address <small style="text-transform:none;letter-spacing:0;font-weight:400">(in country of origin)</small></h6>
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label">Address Line 1 <span class="text-danger">*</span></label>
@@ -520,9 +522,10 @@ require_once __DIR__ . '/../includes/navbar.php';
                                value="<?= e($app['perm_address_line3'] ?? '') ?>" maxlength="255">
                     </div>
                 </div>
+                </div><!-- /section-block Permanent Address -->
 
-                <hr class="my-3">
-                <h6 class="section-label">Address in Mauritius <small class="text-muted">(if applicable)</small></h6>
+                <div class="section-block">
+                <h6 class="section-label">Address in Mauritius <small style="text-transform:none;letter-spacing:0;font-weight:400">(if applicable)</small></h6>
                 <div class="row g-3">
                     <div class="col-md-5">
                         <label class="form-label">Address Line 1</label>
@@ -540,12 +543,13 @@ require_once __DIR__ . '/../includes/navbar.php';
                                value="<?= e($app['corr_town'] ?? '') ?>" maxlength="100">
                     </div>
                 </div>
+                </div><!-- /section-block Address in Mauritius -->
 
                 <?php if ($isMinor): ?>
-                <hr class="my-3">
-                <h6 class="section-label text-warning">
+                <div class="section-block" style="border-left:3px solid #f0a500;">
+                <h6 class="section-label" style="color:#9a6200;">
                     <i class="bi bi-exclamation-circle me-1"></i>
-                    Parent / Guardian Details <small class="text-muted">(required – applicant is under 18)</small>
+                    Parent / Guardian Details <small style="text-transform:none;letter-spacing:0;font-weight:400">(required – applicant is under 18)</small>
                 </h6>
                 <div class="row g-3">
                     <div class="col-md-6">
@@ -574,6 +578,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                                value="<?= e($app['guardian_mobile'] ?? '') ?>" maxlength="30">
                     </div>
                 </div>
+                </div><!-- /section-block Guardian -->
                 <?php endif; ?>
             </div>
         </div>
@@ -589,7 +594,9 @@ require_once __DIR__ . '/../includes/navbar.php';
                 <h6 class="mb-0"><i class="bi bi-book me-1"></i> Step 2: Course Preferences</h6>
             </div>
             <div class="card-body">
-                <div class="row g-3 mb-4">
+                <div class="section-block">
+                <h6 class="section-label">Course Level &amp; Year of Entry</h6>
+                <div class="row g-3">
                     <div class="col-md-4">
                         <label class="form-label">Course Level</label>
                         <select name="course_level" class="form-select">
@@ -613,8 +620,10 @@ require_once __DIR__ . '/../includes/navbar.php';
                         </select>
                     </div>
                 </div>
+                </div><!-- /section-block Course Level -->
 
-                <h6 class="section-label">Courses Applied For <small class="text-muted">(in order of preference)</small></h6>
+                <div class="section-block">
+                <h6 class="section-label">Courses Applied For <small style="text-transform:none;letter-spacing:0;font-weight:400">(in order of preference)</small></h6>
                 <div class="alert alert-info py-2 small mb-3">
                     <i class="bi bi-info-circle me-1"></i>
                     <strong>FBM</strong> – Faculty of Business &amp; Management &nbsp;|&nbsp;
@@ -662,6 +671,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                     </div>
                 </div>
                 <?php endfor; ?>
+                </div><!-- /section-block Courses Applied For -->
             </div>
         </div>
         <?php include __DIR__ . '/partials/form_buttons.php'; ?>
