@@ -679,7 +679,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                                             data-faculty="<?= $fac ?>"
                                             style="<?= $cFac && $cFac !== $fac ? 'display:none' : '' ?>"
                                             <?= $cName === $course ? 'selected' : '' ?>>
-                                        [<?= $fac ?>] <?= e($course) ?>
+                                        <?= e($course) ?>
                                     </option>
                                 <?php endforeach; ?>
                             <?php endforeach; ?>
