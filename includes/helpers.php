@@ -232,3 +232,65 @@ function getStepTitle(int $step): string {
 function isOver18(string $dob): bool {
     return (new DateTime($dob))->diff(new DateTime())->y >= 18;
 }
+
+/**
+ * Full application validation – called only when clicking "Submit Application" on step 7.
+ * Returns an array keyed by step number, each entry has 'label' and 'items' (list of errors).
+ * Empty array means the application is valid and can be submitted.
+ */
+function validateApplication(int $appId): array {
+    $app    = getApplication($appId);
+    $errors = [];
+
+    // ── Step 1: Personal Information ──────────────────────────────────────
+    $step1 = [];
+    if (empty($app['first_name']))  $step1[] = 'First name is required.';
+    if (empty($app['last_name']))   $step1[] = 'Last name is required.';
+    if (empty($app['gender']))      $step1[] = 'Gender is required.';
+    if (empty($app['date_of_birth'])) {
+        $step1[] = 'Date of birth is required.';
+    }
+    if (empty($app['marital_status'])) $step1[] = 'Marital status is required.';
+    if (empty($app['national_id']))    $step1[] = 'National ID / Passport No is required.';
+    if (empty($app['nationality']))    $step1[] = 'Nationality is required.';
+    if (empty($app['email']) || !filter_var($app['email'], FILTER_VALIDATE_EMAIL)) {
+        $step1[] = 'A valid email address is required.';
+    }
+    if (empty($app['mobile_number']))      $step1[] = 'Mobile number is required.';
+    if (empty($app['perm_address_line1'])) $step1[] = 'Permanent address line 1 is required.';
+    if (empty($app['perm_town']))          $step1[] = 'Town / City is required.';
+    if (empty($app['perm_country']))       $step1[] = 'Country is required.';
+
+    if ($step1) {
+        $errors[1] = ['label' => 'Personal Information', 'items' => $step1];
+    }
+
+    // ── Step 2: Course Preferences ────────────────────────────────────────
+    $courses = getCoursePreferences($appId);
+    if (empty($courses)) {
+        $errors[2] = ['label' => 'Course Preferences',
+                      'items' => ['At least one course preference is required.']];
+    }
+
+    // ── Step 5: Documents ─────────────────────────────────────────────────
+    $docs     = getDocuments($appId);
+    $docTypes = array_column($docs, 'document_type');
+    $step5    = [];
+    if (!in_array('passport_photo', $docTypes)) {
+        $step5[] = 'Passport photo is required.';
+    }
+    if (!in_array('national_id', $docTypes)) {
+        $step5[] = 'National ID / Passport document is required.';
+    }
+    if ($step5) {
+        $errors[5] = ['label' => 'Document Upload', 'items' => $step5];
+    }
+
+    // ── Step 6: Payment ───────────────────────────────────────────────────
+    if (($app['payment_status'] ?? '') !== 'paid') {
+        $errors[6] = ['label' => 'Payment',
+                      'items' => ['Payment receipt / reference number is required.']];
+    }
+
+    return $errors;
+}

@@ -18,85 +18,52 @@ if ($step > (int) $app['current_step']) {
     $step = (int) $app['current_step'];
 }
 
-$errors  = $_SESSION['form_errors'] ?? [];
-$success = $_SESSION['form_success'] ?? '';
-unset($_SESSION['form_errors'], $_SESSION['form_success']);
+// (session errors are read after the POST block, below)
 
-// ── POST: process each step ──────────────────────────────────────────────────
+// ── POST: process each step (no validation on Next – validate only on final submit) ──
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $postedStep = (int) ($_POST['step'] ?? 1);
     $action     = $_POST['action'] ?? 'next';
 
     switch ($postedStep) {
 
-        // ── Step 1: Personal Information ──────────────────────────────────
+        // ── Step 1: save everything, no validation ────────────────────────
         case 1:
-            $v = [];
-            $v['title']         = sanitize($_POST['title'] ?? '');
-            $v['first_name']    = sanitize($_POST['first_name'] ?? '');
-            $v['middle_name']   = sanitize($_POST['middle_name'] ?? '');
-            $v['last_name']     = sanitize($_POST['last_name'] ?? '');
-            $v['maiden_name']   = sanitize($_POST['maiden_name'] ?? '');
-            $v['gender']        = sanitize($_POST['gender'] ?? '');
-            $dob                = $_POST['date_of_birth'] ?? '';
-            $v['marital_status']= sanitize($_POST['marital_status'] ?? '');
-            $v['national_id']   = sanitize($_POST['national_id'] ?? '');
-            $v['place_of_birth']= sanitize($_POST['place_of_birth'] ?? '');
-            $v['nationality']   = sanitize($_POST['nationality'] ?? '');
-            $v['email']         = filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL);
-            $v['mobile_number'] = sanitize($_POST['mobile_number'] ?? '');
-            $v['home_number']   = sanitize($_POST['home_number'] ?? '');
-            // Address
-            $v['perm_address_line1'] = sanitize($_POST['perm_address_line1'] ?? '');
-            $v['perm_address_line2'] = sanitize($_POST['perm_address_line2'] ?? '');
-            $v['perm_address_line3'] = sanitize($_POST['perm_address_line3'] ?? '');
-            $v['perm_town']          = sanitize($_POST['perm_town'] ?? '');
-            $v['perm_postcode']      = sanitize($_POST['perm_postcode'] ?? '');
-            $v['perm_country']       = sanitize($_POST['perm_country'] ?? '');
-            $v['corr_address_line1'] = sanitize($_POST['corr_address_line1'] ?? '');
-            $v['corr_address_line2'] = sanitize($_POST['corr_address_line2'] ?? '');
-            $v['corr_town']          = sanitize($_POST['corr_town'] ?? '');
-
-            $errs = [];
-            if (empty($v['first_name'])) $errs[] = 'First name is required.';
-            if (empty($v['last_name']))  $errs[] = 'Last name is required.';
-            if (empty($v['gender']))     $errs[] = 'Gender is required.';
-            if (empty($dob) || !strtotime($dob)) {
-                $errs[] = 'A valid date of birth is required.';
-            }
-            if (empty($v['marital_status'])) $errs[] = 'Marital status is required.';
-            if (empty($v['national_id']))     $errs[] = 'National ID / Passport No is required.';
-            if (empty($v['nationality']))     $errs[] = 'Nationality is required.';
-            if (!filter_var($v['email'], FILTER_VALIDATE_EMAIL)) {
-                $errs[] = 'A valid email address is required.';
-            }
-            if (empty($v['mobile_number'])) $errs[] = 'Mobile number is required.';
-            if (empty($v['perm_address_line1'])) $errs[] = 'Address line 1 is required.';
-            if (empty($v['perm_town']))   $errs[] = 'Town / City is required.';
-            if (empty($v['perm_country'])) $errs[] = 'Country is required.';
-
-            if ($errs) {
-                $_SESSION['form_errors'] = $errs;
-                header('Location: ' . APP_URL . '/application_form/index.php?step=1');
-                exit;
-            }
-
-            $v['date_of_birth'] = $dob;
-
-            // Under-18 guardian
-            $isMinor = !isOver18($dob);
-            if ($isMinor) {
-                $v['guardian_name']       = sanitize($_POST['guardian_name'] ?? '');
-                $v['guardian_address']    = sanitize($_POST['guardian_address'] ?? '');
-                $v['guardian_occupation'] = sanitize($_POST['guardian_occupation'] ?? '');
-                $v['guardian_phone']      = sanitize($_POST['guardian_phone'] ?? '');
-                $v['guardian_mobile']     = sanitize($_POST['guardian_mobile'] ?? '');
-            }
-
+            $dob = $_POST['date_of_birth'] ?? '';
+            $v = [
+                'title'              => sanitize($_POST['title'] ?? ''),
+                'first_name'         => sanitize($_POST['first_name'] ?? ''),
+                'middle_name'        => sanitize($_POST['middle_name'] ?? ''),
+                'last_name'          => sanitize($_POST['last_name'] ?? ''),
+                'maiden_name'        => sanitize($_POST['maiden_name'] ?? ''),
+                'gender'             => sanitize($_POST['gender'] ?? ''),
+                'date_of_birth'      => $dob,
+                'marital_status'     => sanitize($_POST['marital_status'] ?? ''),
+                'national_id'        => sanitize($_POST['national_id'] ?? ''),
+                'place_of_birth'     => sanitize($_POST['place_of_birth'] ?? ''),
+                'nationality'        => sanitize($_POST['nationality'] ?? ''),
+                'email'              => filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL),
+                'mobile_number'      => sanitize($_POST['mobile_number'] ?? ''),
+                'home_number'        => sanitize($_POST['home_number'] ?? ''),
+                'perm_address_line1' => sanitize($_POST['perm_address_line1'] ?? ''),
+                'perm_address_line2' => sanitize($_POST['perm_address_line2'] ?? ''),
+                'perm_address_line3' => sanitize($_POST['perm_address_line3'] ?? ''),
+                'perm_town'          => sanitize($_POST['perm_town'] ?? ''),
+                'perm_postcode'      => sanitize($_POST['perm_postcode'] ?? ''),
+                'perm_country'       => sanitize($_POST['perm_country'] ?? ''),
+                'corr_address_line1' => sanitize($_POST['corr_address_line1'] ?? ''),
+                'corr_address_line2' => sanitize($_POST['corr_address_line2'] ?? ''),
+                'corr_town'          => sanitize($_POST['corr_town'] ?? ''),
+                'guardian_name'      => sanitize($_POST['guardian_name'] ?? ''),
+                'guardian_address'   => sanitize($_POST['guardian_address'] ?? ''),
+                'guardian_occupation'=> sanitize($_POST['guardian_occupation'] ?? ''),
+                'guardian_phone'     => sanitize($_POST['guardian_phone'] ?? ''),
+                'guardian_mobile'    => sanitize($_POST['guardian_mobile'] ?? ''),
+            ];
             saveStep($appId, 1, $v);
             break;
 
-        // ── Step 2: Courses ───────────────────────────────────────────────
+        // ── Step 2: save courses, no validation ───────────────────────────
         case 2:
             $courses = [];
             for ($i = 1; $i <= 3; $i++) {
@@ -106,45 +73,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $courses[] = ['name' => $name, 'faculty' => $faculty];
                 }
             }
-            $errs = [];
-            if (empty($courses)) {
-                $errs[] = 'Please select at least one course preference.';
-            }
-            if ($errs) {
-                $_SESSION['form_errors'] = $errs;
-                header('Location: ' . APP_URL . '/application_form/index.php?step=2');
-                exit;
-            }
             saveCoursePreferences($appId, $courses);
-            $fields = [
+            saveStep($appId, 2, [
                 'course_level' => sanitize($_POST['course_level'] ?? ''),
                 'entry_level'  => sanitize($_POST['entry_level'] ?? ''),
-            ];
-            saveStep($appId, 2, $fields);
+            ]);
             break;
 
-        // ── Step 3: Education ─────────────────────────────────────────────
+        // ── Step 3: save education, no validation ─────────────────────────
         case 3:
-            // Secondary schools
             $schools = [];
-            $schoolNames = $_POST['school_name'] ?? [];
-            foreach ($schoolNames as $i => $name) {
+            foreach ($_POST['school_name'] ?? [] as $i => $name) {
                 if (trim($name)) {
                     $schools[] = [
-                        'name'         => sanitize($name),
-                        'entered_month'=> (int) ($_POST['entered_month'][$i] ?? 0),
-                        'entered_year' => (int) ($_POST['entered_year'][$i] ?? 0),
-                        'left_month'   => (int) ($_POST['left_month'][$i] ?? 0),
-                        'left_year'    => (int) ($_POST['left_year'][$i] ?? 0),
+                        'name'          => sanitize($name),
+                        'entered_month' => (int) ($_POST['entered_month'][$i] ?? 0),
+                        'entered_year'  => (int) ($_POST['entered_year'][$i] ?? 0),
+                        'left_month'    => (int) ($_POST['left_month'][$i] ?? 0),
+                        'left_year'     => (int) ($_POST['left_year'][$i] ?? 0),
                     ];
                 }
             }
             saveSecondarySchools($appId, $schools);
 
-            // O-Level results
             $oResults = [];
-            $oSubjects = $_POST['o_subject'] ?? [];
-            foreach ($oSubjects as $i => $subj) {
+            foreach ($_POST['o_subject'] ?? [] as $i => $subj) {
                 if (trim($subj)) {
                     $oResults[] = [
                         'subject'  => sanitize($subj),
@@ -159,10 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             saveOLevelResults($appId, $oResults);
 
-            // A-Level results
-            $aSubjectsP = $_POST['a_principal_subject'] ?? [];
             $principal = [];
-            foreach ($aSubjectsP as $i => $subj) {
+            foreach ($_POST['a_principal_subject'] ?? [] as $i => $subj) {
                 if (trim($subj)) {
                     $principal[] = [
                         'subject'  => sanitize($subj),
@@ -175,9 +126,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ];
                 }
             }
-            $aSubjectsS = $_POST['a_subsidiary_subject'] ?? [];
             $subsidiary = [];
-            foreach ($aSubjectsS as $i => $subj) {
+            foreach ($_POST['a_subsidiary_subject'] ?? [] as $i => $subj) {
                 if (trim($subj)) {
                     $subsidiary[] = [
                         'subject'  => sanitize($subj),
@@ -191,19 +141,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
             saveALevelResults($appId, $principal, $subsidiary);
-
-            $fields = [
+            saveStep($appId, 3, [
                 'has_english_cert' => isset($_POST['has_english_cert']) ? 1 : 0,
                 'has_french_cert'  => isset($_POST['has_french_cert']) ? 1 : 0,
-            ];
-            saveStep($appId, 3, $fields);
+            ]);
             break;
 
-        // ── Step 4: Employment ────────────────────────────────────────────
+        // ── Step 4: save employment, no validation ────────────────────────
         case 4:
             $records = [];
-            $employers = $_POST['employer'] ?? [];
-            foreach ($employers as $i => $emp) {
+            foreach ($_POST['employer'] ?? [] as $i => $emp) {
                 if (trim($emp)) {
                     $records[] = [
                         'employer'        => sanitize($emp),
@@ -219,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             saveStep($appId, 4, []);
             break;
 
-        // ── Step 5: Documents ─────────────────────────────────────────────
+        // ── Step 5: upload files if provided, no mandatory check ──────────
         case 5:
             $uploadErrors = [];
             foreach (DOCUMENT_TYPES as $type => $label) {
@@ -230,16 +177,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
-            // Require at least passport photo and national ID
-            $docs = getDocuments($appId);
-            $docTypes = array_column($docs, 'document_type');
-            if (!in_array('passport_photo', $docTypes)) {
-                $uploadErrors[] = 'Passport photo is required.';
-            }
-            if (!in_array('national_id', $docTypes)) {
-                $uploadErrors[] = 'National ID / Passport is required.';
-            }
             if ($uploadErrors) {
+                // Only block on technical upload errors (wrong format / too large)
                 $_SESSION['form_errors'] = $uploadErrors;
                 header('Location: ' . APP_URL . '/application_form/index.php?step=5');
                 exit;
@@ -247,57 +186,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             saveStep($appId, 5, []);
             break;
 
-        // ── Step 6: Payment ───────────────────────────────────────────────
+        // ── Step 6: save payment if provided, no mandatory check ──────────
         case 6:
             $receipt = sanitize($_POST['payment_receipt'] ?? '');
-            $method  = sanitize($_POST['payment_method'] ?? '');
-            $errs = [];
-            if (empty($receipt)) $errs[] = 'Payment receipt number is required.';
-            if ($errs) {
-                $_SESSION['form_errors'] = $errs;
-                header('Location: ' . APP_URL . '/application_form/index.php?step=6');
-                exit;
+            $fields  = [];
+            if (!empty($receipt)) {
+                $fields = ['payment_status' => 'paid', 'payment_receipt' => $receipt];
             }
-            saveStep($appId, 6, [
-                'payment_status'  => 'paid',
-                'payment_receipt' => $receipt,
-            ]);
+            saveStep($appId, 6, $fields);
             break;
 
-        // ── Step 7: Declaration ───────────────────────────────────────────
+        // ── Step 7: FULL VALIDATION before final submit ───────────────────
         case 7:
             if (empty($_POST['declaration_agreed'])) {
-                $_SESSION['form_errors'] = ['You must check the declaration to submit.'];
+                $_SESSION['submit_errors'] = [
+                    7 => ['label' => 'Declaration', 'items' => ['You must check the declaration to submit.']],
+                ];
                 header('Location: ' . APP_URL . '/application_form/index.php?step=7');
                 exit;
             }
+
+            // Validate all required fields from all steps
+            $allErrors = validateApplication($appId);
+            if (!empty($allErrors)) {
+                $_SESSION['submit_errors'] = $allErrors;
+                header('Location: ' . APP_URL . '/application_form/index.php?step=7');
+                exit;
+            }
+
+            // All good – submit
             $db = getDB();
             $db->prepare(
                 'UPDATE applications SET status = "submitted", declaration_agreed = 1,
                  declaration_date = CURDATE(), submitted_at = NOW() WHERE id = ?'
             )->execute([$appId]);
-            $_SESSION['form_success'] = 'submitted';
             header('Location: ' . APP_URL . '/application_form/index.php?step=7&submitted=1');
             exit;
     }
 
     // Save & Exit
     if ($action === 'exit') {
-        $_SESSION['form_success'] = 'Progress saved. You can resume your application at any time.';
         header('Location: ' . APP_URL . '/landing_page/index.php');
         exit;
     }
 
-    // Advance to next step
-    $nextStep = $postedStep + 1;
-    header('Location: ' . APP_URL . '/application_form/index.php?step=' . $nextStep);
+    // Advance to next step (no validation – always allowed)
+    header('Location: ' . APP_URL . '/application_form/index.php?step=' . ($postedStep + 1));
     exit;
 }
 
 // Reload fresh app data
-$app      = getApplication($appId);
-$isMinor  = !empty($app['date_of_birth']) && !isOver18($app['date_of_birth']);
-$submitted = isset($_GET['submitted']);
+$app         = getApplication($appId);
+$isMinor     = !empty($app['date_of_birth']) && !isOver18($app['date_of_birth']);
+$submitted   = isset($_GET['submitted']);
+
+// Step-level errors (only shown on step 7)
+$errors       = $_SESSION['form_errors'] ?? [];
+$submitErrors = $_SESSION['submit_errors'] ?? [];   // array keyed by step number
+unset($_SESSION['form_errors'], $_SESSION['submit_errors']);
 
 // Data for education step
 $schools    = getSecondarySchools($appId);
@@ -381,10 +327,11 @@ while (count($courses)    < 3) $courses[]    = [];
         <?php endfor; ?>
     </div>
 
-    <!-- Alerts -->
+    <!-- Alerts: technical upload errors (steps 1-6) -->
     <?php if ($errors): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong><i class="bi bi-exclamation-triangle-fill me-1"></i> Please fix the following:</strong>
+            <strong><i class="bi bi-exclamation-triangle-fill me-1"></i>
+                Upload error – please fix the following:</strong>
             <ul class="mb-0 mt-1">
                 <?php foreach ($errors as $err): ?>
                     <li><?= e($err) ?></li>
@@ -393,9 +340,32 @@ while (count($courses)    < 3) $courses[]    = [];
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
-    <?php if ($success): ?>
-        <div class="alert alert-success alert-dismissible fade show">
-            <i class="bi bi-check-circle me-1"></i> <?= e($success) ?>
+
+    <!-- Alerts: full validation errors shown only on step 7 submit -->
+    <?php if (!empty($submitErrors)): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>
+                <i class="bi bi-exclamation-triangle-fill me-1"></i>
+                Please complete the required fields before submitting:
+            </strong>
+            <?php foreach ($submitErrors as $stepNum => $group): ?>
+                <div class="mt-2">
+                    <span class="fw-semibold">
+                        Step <?= $stepNum ?> – <?= e($group['label']) ?>
+                        <?php if ($stepNum !== 7): ?>
+                            <a href="<?= APP_URL ?>/application_form/index.php?step=<?= $stepNum ?>"
+                               class="btn btn-sm btn-outline-danger ms-2 py-0">
+                                <i class="bi bi-pencil me-1"></i>Go fix
+                            </a>
+                        <?php endif; ?>
+                    </span>
+                    <ul class="mb-0 mt-1">
+                        <?php foreach ($group['items'] as $item): ?>
+                            <li><?= e($item) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endforeach; ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
