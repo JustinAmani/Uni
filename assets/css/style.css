@@ -1,55 +1,59 @@
 /* ── UdM Application Portal – Custom Styles ─────────────────────────────── */
 
 :root {
-    --udm-teal:      #0d8c7a;
-    --udm-teal-dark: #096b5e;
-    --udm-teal-nav:  #0b7a6a;
-    --udm-hero-from: #0fa08c;
-    --udm-hero-to:   #0b7a6a;
-    --udm-accent:    #17b8a2;
-    --udm-text-dark: #1a3a34;
-    --udm-light:     #f0faf8;
-    --udm-border:    #c2e5df;
-    --udm-white:     #ffffff;
+    --udm-teal:       #1aaa96;
+    --udm-teal-dark:  #148a78;
+    --udm-teal-light: #e8f7f5;
+    --udm-title:      #0f8a78;
+    --udm-border:     #d0ebe7;
+    --udm-bg:         #f7fafa;
+    --udm-text:       #1c3a36;
 }
 
-/* ────────────────── Base ──────────────────────────────────────────────── */
-body { background: #f5f7f7; }
+/* ────────────────── Base ────────────────────────────────────────────────── */
+body {
+    background: var(--udm-bg);
+    color: #333;
+}
 
-/* ────────────────── Navbar ────────────────────────────────────────────── */
+/* ────────────────── Navbar – WHITE, exactly like screenshot ─────────────── */
 .udm-navbar {
-    background: var(--udm-teal-nav);
-    padding: .55rem 1.25rem;
-    min-height: 68px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.22);
+    background: #ffffff;
+    border-bottom: 1px solid #e0ecea;
+    box-shadow: 0 1px 6px rgba(0,0,0,.07);
+    padding: .45rem 1.5rem;
+    min-height: 64px;
 }
 
-/* Real UdM logo – shown on a white rounded pill so the logo colours are preserved */
+/* The real UdM logo – full colours on white navbar */
 .udm-navbar .udm-logo-img {
-    height: 50px;
+    height: 52px;
     width: auto;
     object-fit: contain;
-    background: #fff;
-    border-radius: 6px;
-    padding: 4px 10px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.18);
 }
 
-/* ────────────────── Landing Hero ──────────────────────────────────────── */
+/* Right-side welcome text – dark, not white */
+.udm-navbar .nav-welcome {
+    color: #333;
+    font-size: .87rem;
+}
+.udm-navbar .btn-outline-secondary {
+    font-size: .82rem;
+}
+
+/* ────────────────── Landing hero banner ────────────────────────────────── */
 .udm-hero {
-    background: linear-gradient(135deg, var(--udm-hero-from), var(--udm-hero-to));
+    background: linear-gradient(135deg, #1bb8a4, #0d8a7a);
     color: #fff;
     padding: 2rem 1rem;
 }
-.udm-hero h2     { font-size: 1.5rem; font-weight: 700; }
-.udm-hero p      { font-size: .95rem; opacity: .92; }
-.udm-hero a.text-link { color: #a8f0e6; font-weight: 600; }
+.udm-hero h2  { font-size: 1.5rem; font-weight: 700; }
+.udm-hero p   { font-size: .95rem; opacity: .92; }
 
 .role-btn {
-    border-color: rgba(255,255,255,.5);
+    border-color: rgba(255,255,255,.55);
     color: #fff;
     transition: background .2s, border-color .2s;
-    font-size: .9rem;
 }
 .role-btn:hover, .role-btn.active {
     background: rgba(255,255,255,.2);
@@ -57,9 +61,9 @@ body { background: #f5f7f7; }
     color: #fff;
 }
 
-/* ────────────────── Auth Cards ─────────────────────────────────────────── */
+/* ────────────────── Auth cards ─────────────────────────────────────────── */
 .udm-card-header {
-    background: linear-gradient(135deg, var(--udm-teal-nav), var(--udm-hero-from));
+    background: linear-gradient(135deg, #0d8a7a, #1bb8a4);
     color: #fff;
     border-bottom: none !important;
 }
@@ -68,8 +72,6 @@ body { background: #f5f7f7; }
     border: none;
     border-bottom: 2px solid transparent;
     padding: .6rem 1rem;
-    font-size: .9rem;
-    transition: color .15s;
 }
 .udm-card-header .nav-link.active {
     color: #fff;
@@ -79,93 +81,112 @@ body { background: #f5f7f7; }
 }
 .udm-card-header .nav-link:hover { color: #fff; }
 
-/* ────────────────── Buttons ────────────────────────────────────────────── */
+/* ────────────────── Portal page title ──────────────────────────────────── */
+.udm-portal-title {
+    color: var(--udm-title);
+    font-size: 1.45rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 1.1rem 0 .5rem;
+    letter-spacing: -.01em;
+}
+
+/* ────────────────── Buttons ─────────────────────────────────────────────── */
 .btn-udm-primary {
     background: var(--udm-teal);
     border-color: var(--udm-teal);
     color: #fff;
     font-weight: 500;
-    transition: background .2s, border-color .2s;
+    transition: background .18s, border-color .18s;
 }
 .btn-udm-primary:hover, .btn-udm-primary:focus {
     background: var(--udm-teal-dark);
     border-color: var(--udm-teal-dark);
     color: #fff;
 }
+
 .bg-udm   { background-color: var(--udm-teal) !important; }
 .text-udm { color: var(--udm-teal) !important; }
 
 /* ────────────────── Footer ──────────────────────────────────────────────── */
 .udm-footer {
-    background: var(--udm-teal-dark);
-    color: rgba(255,255,255,.82);
+    background: #0d7a6c;
+    color: rgba(255,255,255,.85);
 }
-.udm-footer a { color: #a0e8df; }
+.udm-footer a { color: #a0ede4; }
 .udm-footer a:hover { color: #fff; }
 
-/* ────────────────── Progress Stepper ───────────────────────────────────── */
+/* ────────────────── Stepper – matches screenshot exactly ───────────────── */
 .udm-stepper {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding: .5rem 0 0;
+    padding: .75rem 0 0;
     overflow-x: auto;
     gap: 0;
+    margin-bottom: 1.5rem;
 }
+
 .stepper-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     flex-shrink: 0;
 }
+
+/* Lines between circles */
 .stepper-line {
     flex: 1;
-    height: 3px;
-    background: #dee2e6;
+    height: 2px;
+    background: #d5e8e5;
     margin-top: 18px;
-    min-width: 30px;
-    max-width: 70px;
-    border-radius: 2px;
+    min-width: 35px;
+    max-width: 80px;
     transition: background .3s;
 }
 .stepper-line.filled { background: var(--udm-teal); }
 
+/* Circles */
 .stepper-circle {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: .88rem;
-    border: 2.5px solid transparent;
+    font-size: .85rem;
+    border: 2px solid transparent;
     text-decoration: none !important;
     transition: all .2s;
 }
+/* Completed: filled teal */
 .stepper-circle.done {
     background: var(--udm-teal);
     color: #fff;
     border-color: var(--udm-teal);
 }
+/* Current: white with teal border */
 .stepper-circle.current {
     background: #fff;
     color: var(--udm-teal);
     border-color: var(--udm-teal);
-    box-shadow: 0 0 0 4px rgba(13,140,122,.15);
+    box-shadow: 0 0 0 3px rgba(26,170,150,.15);
 }
+/* Future: light grey */
 .stepper-circle.pending {
-    background: #f0f0f0;
-    color: #adb5bd;
-    border-color: #dee2e6;
+    background: #f0f2f2;
+    color: #9eaaa8;
+    border-color: #d5e0de;
     pointer-events: none;
 }
-.stepper-circle.done:hover   { background: var(--udm-teal-dark); }
-.stepper-circle.current:hover { box-shadow: 0 0 0 6px rgba(13,140,122,.18); }
 
+.stepper-circle.done:hover { background: var(--udm-teal-dark); }
+
+/* Labels */
 .stepper-label {
     font-size: .62rem;
-    color: #6c757d;
+    color: #8aaeab;
     margin-top: 5px;
     text-align: center;
     white-space: nowrap;
@@ -173,80 +194,76 @@ body { background: #f5f7f7; }
 .stepper-item.current .stepper-label { color: var(--udm-teal); font-weight: 600; }
 .stepper-item.done    .stepper-label { color: var(--udm-teal); }
 
-/* ────────────────── Form page ───────────────────────────────────────────── */
+/* ────────────────── Form page body ─────────────────────────────────────── */
 .app-form-page { background: #f4f8f7; }
 
-/* Section headings inside cards */
+/* Card headers in form */
+.udm-card-header-form {
+    background: var(--udm-teal);
+    color: #fff;
+    padding: .5rem 1rem;
+    font-size: .9rem;
+    font-weight: 600;
+    border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0;
+}
+/* Keep existing udm-card-header for auth cards */
+
+/* Section labels inside cards */
 .section-label {
-    font-size: .72rem;
+    font-size: .7rem;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: .07em;
-    color: var(--udm-teal);
-    padding-bottom: .4rem;
+    letter-spacing: .08em;
+    color: var(--udm-teal-dark);
+    padding-bottom: .35rem;
     border-bottom: 2px solid var(--udm-border);
     margin-bottom: 1rem;
 }
 
-/* Required asterisk color */
-.text-danger { color: #dc3545 !important; }
-
-/* Subtle hover on form rows */
+/* Input focus ring */
 .form-control:focus, .form-select:focus {
-    border-color: var(--udm-accent);
-    box-shadow: 0 0 0 .18rem rgba(23,184,162,.2);
+    border-color: var(--udm-teal);
+    box-shadow: 0 0 0 .2rem rgba(26,170,150,.18);
 }
 
-/* ────────────────── Document upload cards ─────────────────────────────── */
+/* ────────────────── Document upload ────────────────────────────────────── */
 .doc-upload-card {
     background: #fafefe;
-    border-color: #d4e8e5 !important;
-    border-radius: .5rem;
+    border-color: #d8ecea !important;
+    border-radius: .45rem;
     transition: border-color .2s, box-shadow .2s;
 }
 .doc-upload-card:hover {
     border-color: var(--udm-teal) !important;
-    box-shadow: 0 2px 8px rgba(13,140,122,.1);
+    box-shadow: 0 2px 8px rgba(26,170,150,.1);
 }
 
-/* ────────────────── Payment summary ───────────────────────────────────── */
-.payment-summary {
-    background: var(--udm-light);
-    border-color: var(--udm-border) !important;
-    border-radius: .75rem;
-}
-
-/* ────────────────── Declaration box ───────────────────────────────────── */
-.declaration-box {
-    background: var(--udm-light);
+/* ────────────────── Declaration & Payment boxes ────────────────────────── */
+.declaration-box, .payment-summary {
+    background: #f0faf8;
     border-color: var(--udm-border) !important;
     border-radius: .5rem;
-    font-size: .94rem;
-    line-height: 1.75;
 }
+.declaration-box { font-size: .94rem; line-height: 1.75; }
 
-/* ────────────────── Agent dashboard ───────────────────────────────────── */
+/* ────────────────── Agent dashboard ────────────────────────────────────── */
 .stat-card {
     cursor: pointer;
-    transition: transform .15s, box-shadow .15s;
     text-decoration: none;
     color: inherit;
+    transition: transform .15s, box-shadow .15s;
 }
 .stat-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 18px rgba(0,0,0,.1) !important;
+    box-shadow: 0 6px 18px rgba(0,0,0,.09) !important;
     color: inherit;
 }
-
-/* ────────────────── Go-fix button inside alert ─────────────────────────── */
-.btn-outline-danger.py-0 { font-size: .78rem; }
 
 /* ────────────────── Responsive ─────────────────────────────────────────── */
 @media (max-width: 576px) {
     .udm-stepper { justify-content: flex-start; }
     .stepper-label { display: none; }
-    .stepper-circle { width: 30px; height: 30px; font-size: .75rem; }
+    .stepper-circle { width: 28px; height: 28px; font-size: .75rem; }
     .stepper-line { min-width: 14px; margin-top: 13px; }
-    .udm-navbar .udm-logo-img { height: 38px; }
-    .udm-hero h2 { font-size: 1.15rem; }
+    .udm-navbar .udm-logo-img { height: 40px; }
 }

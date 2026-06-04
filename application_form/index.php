@@ -275,12 +275,13 @@ while (count($courses)    < 3) $courses[]    = [];
 <body class="app-form-page">
 
 <?php
+// Navbar is now white – use dark text to match screenshot
 $navRight = '
-    <span class="text-white small">
-        Welcome, <strong>' . e(getCurrentUserName()) . '</strong>
-        <span class="badge bg-white text-dark ms-1">' . e($app['app_number']) . '</span>
+    <span class="nav-welcome text-muted small">
+        Welcome, <strong class="text-dark">' . e(getCurrentUserName()) . '</strong>
+        <span class="text-muted ms-1">&#x25BE;</span>
     </span>
-    <a href="' . APP_URL . '/auth/logout.php" class="btn btn-sm btn-outline-light">
+    <a href="' . APP_URL . '/auth/logout.php" class="btn btn-sm btn-outline-secondary">
         <i class="bi bi-box-arrow-right me-1"></i> Logout
     </a>';
 require_once __DIR__ . '/../includes/navbar.php';
@@ -288,7 +289,7 @@ require_once __DIR__ . '/../includes/navbar.php';
 
 <div class="container py-4">
 
-    <h4 class="text-center mb-1 fw-bold text-udm">University Online Application Portal</h4>
+    <h4 class="udm-portal-title">University Online Application Portal</h4>
 
     <!-- Step Progress Bar -->
     <div class="udm-stepper mb-4">
@@ -388,7 +389,7 @@ require_once __DIR__ . '/../includes/navbar.php';
           id="stepForm">
         <input type="hidden" name="step" value="1">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header py-2">
+            <div class="card-header udm-card-header-form">
                 <h6 class="mb-0"><i class="bi bi-person me-1"></i> Step 1: Personal Information</h6>
             </div>
             <div class="card-body">
@@ -584,7 +585,7 @@ require_once __DIR__ . '/../includes/navbar.php';
     <form method="POST" action="<?= APP_URL ?>/application_form/index.php" novalidate id="stepForm">
         <input type="hidden" name="step" value="2">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header py-2">
+            <div class="card-header udm-card-header-form">
                 <h6 class="mb-0"><i class="bi bi-book me-1"></i> Step 2: Course Preferences</h6>
             </div>
             <div class="card-body">
@@ -673,7 +674,7 @@ require_once __DIR__ . '/../includes/navbar.php';
 
         <!-- 3a: Secondary Schools -->
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header py-2">
+            <div class="card-header udm-card-header-form">
                 <h6 class="mb-0"><i class="bi bi-building me-1"></i>
                     3a. Secondary Schools / Educational Institutions Attended</h6>
             </div>
@@ -731,7 +732,7 @@ require_once __DIR__ . '/../includes/navbar.php';
 
         <!-- 3b: O-Level Results -->
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header py-2">
+            <div class="card-header udm-card-header-form">
                 <h6 class="mb-0"><i class="bi bi-journal-text me-1"></i> 3b. SC / GCE "O" Level Results</h6>
             </div>
             <div class="card-body">
@@ -741,7 +742,7 @@ require_once __DIR__ . '/../includes/navbar.php';
 
         <!-- 3c: A-Level Results -->
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header py-2">
+            <div class="card-header udm-card-header-form">
                 <h6 class="mb-0"><i class="bi bi-journal-text me-1"></i> 3c. HSC / GCE "A" Level Results</h6>
             </div>
             <div class="card-body">
@@ -754,7 +755,7 @@ require_once __DIR__ . '/../includes/navbar.php';
 
         <!-- 3d: Language Certificate -->
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header py-2">
+            <div class="card-header udm-card-header-form">
                 <h6 class="mb-0"><i class="bi bi-translate me-1"></i> 3d. Language Certificate <span class="badge bg-danger ms-1">Mandatory</span></h6>
             </div>
             <div class="card-body">
@@ -784,7 +785,7 @@ require_once __DIR__ . '/../includes/navbar.php';
     <form method="POST" action="<?= APP_URL ?>/application_form/index.php" novalidate id="stepForm">
         <input type="hidden" name="step" value="4">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header py-2 d-flex justify-content-between align-items-center">
+            <div class="card-header udm-card-header-form d-flex justify-content-between align-items-center">
                 <h6 class="mb-0"><i class="bi bi-briefcase me-1"></i> Step 4: Employment History</h6>
                 <button type="button" class="btn btn-sm btn-outline-light" id="addEmployer">
                     <i class="bi bi-plus-circle me-1"></i> Add Record
@@ -855,7 +856,7 @@ require_once __DIR__ . '/../includes/navbar.php';
           enctype="multipart/form-data" novalidate id="stepForm">
         <input type="hidden" name="step" value="5">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header py-2">
+            <div class="card-header udm-card-header-form">
                 <h6 class="mb-0"><i class="bi bi-cloud-upload me-1"></i> Step 5: Document Upload</h6>
             </div>
             <div class="card-body">
@@ -901,7 +902,7 @@ require_once __DIR__ . '/../includes/navbar.php';
     <form method="POST" action="<?= APP_URL ?>/application_form/index.php" novalidate id="stepForm">
         <input type="hidden" name="step" value="6">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header py-2">
+            <div class="card-header udm-card-header-form">
                 <h6 class="mb-0"><i class="bi bi-credit-card me-1"></i> Step 6: Application Fee Payment</h6>
             </div>
             <div class="card-body">
@@ -956,7 +957,7 @@ require_once __DIR__ . '/../includes/navbar.php';
     <form method="POST" action="<?= APP_URL ?>/application_form/index.php" novalidate id="stepForm">
         <input type="hidden" name="step" value="7">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header py-2">
+            <div class="card-header udm-card-header-form">
                 <h6 class="mb-0"><i class="bi bi-pen me-1"></i> Step 7: Declaration and Submission</h6>
             </div>
             <div class="card-body">

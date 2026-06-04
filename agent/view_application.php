@@ -46,7 +46,7 @@ $pageTitle = 'Application ' . $app['app_number'];
 
 <?php
 $navHomeUrl = APP_URL . '/agent/index.php';
-$navRight   = '<a href="' . APP_URL . '/auth/logout.php" class="btn btn-sm btn-outline-light">
+$navRight   = '<a href="' . APP_URL . '/auth/logout.php" class="btn btn-sm btn-outline-secondary">
     <i class="bi bi-box-arrow-right me-1"></i> Logout</a>';
 require_once __DIR__ . '/../includes/navbar.php';
 ?>

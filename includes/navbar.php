@@ -1,30 +1,27 @@
 <?php
 /**
- * Reusable navbar partial.
+ * Reusable white navbar – matches the screenshot design.
  * Variables:
- *   $navHomeUrl  (string) – href on the logo (defaults to landing page)
- *   $navRight    (string) – optional HTML for the right side of the navbar
+ *   $navHomeUrl (string) – logo link href
+ *   $navRight   (string) – HTML for the right side
  */
 $navHomeUrl = $navHomeUrl ?? (APP_URL . '/landing_page/index.php');
 $navRight   = $navRight   ?? '';
 ?>
-<nav class="navbar udm-navbar">
-    <div class="container-fluid px-4">
+<nav class="navbar udm-navbar d-flex align-items-center justify-content-between px-3 px-md-4">
 
-        <!-- Logo + name -->
-        <a class="navbar-brand d-flex align-items-center gap-3 text-decoration-none"
-           href="<?= $navHomeUrl ?>">
-            <img src="<?= APP_URL ?>/assets/img/udm-logo.jpg"
-                 alt="Université des Mascareignes"
-                 class="udm-logo-img">
-        </a>
+    <!-- Logo -->
+    <a href="<?= $navHomeUrl ?>" class="d-flex align-items-center text-decoration-none">
+        <img src="<?= APP_URL ?>/assets/img/udm-logo.jpg"
+             alt="Université des Mascareignes"
+             class="udm-logo-img">
+    </a>
 
-        <!-- Right slot -->
-        <?php if ($navRight): ?>
-            <div class="ms-auto d-flex align-items-center gap-3">
-                <?= $navRight ?>
-            </div>
-        <?php endif; ?>
+    <!-- Right slot (welcome text, logout, etc.) -->
+    <?php if ($navRight): ?>
+        <div class="d-flex align-items-center gap-3">
+            <?= $navRight ?>
+        </div>
+    <?php endif; ?>
 
-    </div>
 </nav>

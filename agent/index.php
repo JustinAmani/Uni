@@ -32,12 +32,12 @@ $pageTitle = 'Agent Dashboard';
 
 <?php
 $navRight = '
-    <span class="text-white small">
+    <span class="nav-welcome text-muted small">
         <i class="bi bi-person-badge me-1"></i>
-        ' . e(getCurrentUserName()) . '
+        <strong class="text-dark">' . e(getCurrentUserName()) . '</strong>
         <span class="badge bg-warning text-dark ms-1">' . ucfirst(getCurrentUserRole()) . '</span>
     </span>
-    <a href="' . APP_URL . '/auth/logout.php" class="btn btn-sm btn-outline-light">
+    <a href="' . APP_URL . '/auth/logout.php" class="btn btn-sm btn-outline-secondary">
         <i class="bi bi-box-arrow-right me-1"></i> Logout
     </a>';
 require_once __DIR__ . '/../includes/navbar.php';
