@@ -689,14 +689,20 @@ require_once __DIR__ . '/../includes/navbar.php';
 
                 <!-- 3a: Secondary Schools -->
                 <div class="section-block">
-                    <h6 class="section-label">Secondary Schools / Educational Institutions Attended</h6>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="section-label mb-0">Secondary Schools / Educational Institutions Attended</h6>
+                        <button type="button" class="btn btn-sm btn-udm-primary ms-2" id="addSchool">
+                            <i class="bi bi-plus-circle me-1"></i> Add Record
+                        </button>
+                    </div>
                     <div class="row g-2 mb-1 d-none d-md-flex">
                         <div class="col-md-5"><small class="fw-semibold text-muted">Institution</small></div>
                         <div class="col-md-4 text-center"><small class="fw-semibold text-muted">Entered (Month / Year)</small></div>
                         <div class="col-md-3 text-center"><small class="fw-semibold text-muted">Left (Month / Year)</small></div>
                     </div>
+                    <div id="schoolRows">
                     <?php foreach ($schools as $i => $s): ?>
-                    <div class="row g-2 mb-2 align-items-center">
+                    <div class="school-row row g-2 mb-2 align-items-center">
                         <div class="col-md-5">
                             <input type="text" name="school_name[]" class="form-control"
                                    value="<?= e($s['institution_name'] ?? '') ?>"
@@ -726,21 +732,39 @@ require_once __DIR__ . '/../includes/navbar.php';
                         <?php endforeach; ?>
                     </div>
                     <?php endforeach; ?>
+                    </div>
                 </div>
 
                 <!-- 3b: O-Level Results -->
                 <div class="section-block">
-                    <h6 class="section-label">SC / GCE "O" Level Results</h6>
-                    <?= renderResultsGrid($oResults, 'o_subject', ['o_a1_month','o_a1_grade','o_a2_month','o_a2_grade','o_a3_month','o_a3_grade'], 10) ?>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="section-label mb-0">SC / GCE "O" Level Results</h6>
+                        <button type="button" class="btn btn-sm btn-udm-primary ms-2" id="addOLevel">
+                            <i class="bi bi-plus-circle me-1"></i> Add Record
+                        </button>
+                    </div>
+                    <?= renderResultsGrid($oResults, 'o_subject', ['o_a1_month','o_a1_grade','o_a2_month','o_a2_grade','o_a3_month','o_a3_grade'], 3, 'oLevelRows') ?>
                 </div>
 
                 <!-- 3c: A-Level Results -->
                 <div class="section-block">
-                    <h6 class="section-label">HSC / GCE "A" Level Results</h6>
-                    <p class="text-muted small fw-semibold mb-2 text-uppercase">Principal / Advanced Level</p>
-                    <?= renderResultsGrid($principal, 'a_principal_subject', ['ap_a1_month','ap_a1_grade','ap_a2_month','ap_a2_grade','ap_a3_month','ap_a3_grade'], 3) ?>
-                    <p class="text-muted small fw-semibold mt-3 mb-2 text-uppercase">Subsidiary Level</p>
-                    <?= renderResultsGrid($subsidiary, 'a_subsidiary_subject', ['as_a1_month','as_a1_grade','as_a2_month','as_a2_grade','as_a3_month','as_a3_grade'], 4) ?>
+                    <h6 class="section-label mb-3">HSC / GCE "A" Level Results</h6>
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <p class="text-muted small fw-semibold mb-0 text-uppercase">Principal / Advanced Level</p>
+                        <button type="button" class="btn btn-sm btn-udm-primary ms-2" id="addPrincipal">
+                            <i class="bi bi-plus-circle me-1"></i> Add Record
+                        </button>
+                    </div>
+                    <?= renderResultsGrid($principal, 'a_principal_subject', ['ap_a1_month','ap_a1_grade','ap_a2_month','ap_a2_grade','ap_a3_month','ap_a3_grade'], 3, 'principalRows') ?>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3 mb-2">
+                        <p class="text-muted small fw-semibold mb-0 text-uppercase">Subsidiary Level</p>
+                        <button type="button" class="btn btn-sm btn-udm-primary ms-2" id="addSubsidiary">
+                            <i class="bi bi-plus-circle me-1"></i> Add Record
+                        </button>
+                    </div>
+                    <?= renderResultsGrid($subsidiary, 'a_subsidiary_subject', ['as_a1_month','as_a1_grade','as_a2_month','as_a2_grade','as_a3_month','as_a3_grade'], 3, 'subsidiaryRows') ?>
                 </div>
 
                 <!-- 3d: Language Certificate -->
@@ -1012,9 +1036,14 @@ require_once __DIR__ . '/../includes/footer.php';
 <?php
 /**
  * Renders O/A-Level results as a Bootstrap grid (no HTML table).
+ * $containerId is used by JS to append new rows dynamically.
  */
-function renderResultsGrid(array $rows, string $subjName, array $colNames, int $count = 10): string {
-    $html  = '<div class="row g-2 mb-1 d-none d-md-flex">';
+function renderResultsGrid(array $rows, string $subjName, array $colNames, int $count = 3, string $containerId = ''): string {
+    $open  = $containerId ? '<div id="' . htmlspecialchars($containerId, ENT_QUOTES) . '">' : '';
+    $close = $containerId ? '</div>' : '';
+
+    $html  = $open;
+    $html .= '<div class="row g-2 mb-1 d-none d-md-flex">';
     $html .= '<div class="col-md-3"><small class="fw-semibold text-muted">Subject</small></div>';
     $html .= '<div class="col"><small class="fw-semibold text-muted">1st Attempt <span class="text-muted">(MM/YYYY + Grade)</span></small></div>';
     $html .= '<div class="col"><small class="fw-semibold text-muted">2nd Attempt</small></div>';
@@ -1025,7 +1054,7 @@ function renderResultsGrid(array $rows, string $subjName, array $colNames, int $
         $r       = $rows[$i] ?? [];
         $subjVal = htmlspecialchars($r['subject_name'] ?? '', ENT_QUOTES);
 
-        $html .= '<div class="row g-2 mb-2 align-items-center">';
+        $html .= '<div class="subj-row row g-2 mb-2 align-items-center">';
         $html .= '<div class="col-md-3"><input type="text" name="' . $subjName . '[]"'
                . ' class="form-control form-control-sm" value="' . $subjVal . '"'
                . ' maxlength="255" placeholder="Subject"></div>';
@@ -1048,6 +1077,7 @@ function renderResultsGrid(array $rows, string $subjName, array $colNames, int $
         }
         $html .= '</div>';
     }
+    $html .= $close;
     return $html;
 }
 ?>

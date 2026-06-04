@@ -95,6 +95,137 @@ function bindRemoveButtons() {
 }
 bindRemoveButtons();
 
+// ── Step 3: Add Record buttons (DOM-only, no innerHTML) ───────────────────
+
+/** Create a <select> for month names using safe DOM methods */
+function createMonthSelect(fieldName) {
+    const months = ['January','February','March','April','May','June',
+                    'July','August','September','October','November','December'];
+    const sel = document.createElement('select');
+    sel.name      = fieldName;
+    sel.className = 'form-select';
+
+    const def = document.createElement('option');
+    def.value       = '0';
+    def.textContent = 'Month';
+    sel.appendChild(def);
+
+    months.forEach((m, i) => {
+        const opt = document.createElement('option');
+        opt.value       = String(i + 1);
+        opt.textContent = m;
+        sel.appendChild(opt);
+    });
+    return sel;
+}
+
+/** Create a <select> for years (current year → 1990) using safe DOM methods */
+function createYearSelect(fieldName) {
+    const y0  = new Date().getFullYear();
+    const sel = document.createElement('select');
+    sel.name      = fieldName;
+    sel.className = 'form-select';
+
+    const def = document.createElement('option');
+    def.value       = '0';
+    def.textContent = 'Year';
+    sel.appendChild(def);
+
+    for (let y = y0; y >= 1990; y--) {
+        const opt = document.createElement('option');
+        opt.value       = String(y);
+        opt.textContent = String(y);
+        sel.appendChild(opt);
+    }
+    return sel;
+}
+
+/** Create a text <input> using safe DOM methods */
+function createInput(fieldName, { placeholder = '', maxLen = 255, size = 'normal', style = '' } = {}) {
+    const inp = document.createElement('input');
+    inp.type      = 'text';
+    inp.name      = fieldName;
+    inp.className = size === 'sm' ? 'form-control form-control-sm' : 'form-control';
+    inp.maxLength = maxLen;
+    if (placeholder) inp.placeholder = placeholder;
+    if (style)       inp.style.cssText = style;
+    return inp;
+}
+
+/** Add one empty secondary-school row to #schoolRows */
+const addSchoolBtn = document.getElementById('addSchool');
+if (addSchoolBtn) {
+    addSchoolBtn.addEventListener('click', () => {
+        const row = document.createElement('div');
+        row.className = 'school-row row g-2 mb-2 align-items-center';
+
+        // Institution col
+        const c1 = document.createElement('div');
+        c1.className = 'col-md-5';
+        c1.appendChild(createInput('school_name[]', { placeholder: 'Institution name' }));
+        row.appendChild(c1);
+
+        // Entered / Left cols
+        [['entered_month[]', 'entered_year[]', 'col-md-4'],
+         ['left_month[]',    'left_year[]',    'col-md-3']].forEach(([mName, yName, cls]) => {
+            const c    = document.createElement('div');
+            c.className = cls;
+            const flex = document.createElement('div');
+            flex.className = 'd-flex gap-1';
+            flex.appendChild(createMonthSelect(mName));
+            flex.appendChild(createYearSelect(yName));
+            c.appendChild(flex);
+            row.appendChild(c);
+        });
+
+        document.getElementById('schoolRows').appendChild(row);
+    });
+}
+
+/** Add one empty subject row to a results-grid container */
+function addSubjectRow(containerId, subjName, colNames) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const row = document.createElement('div');
+    row.className = 'subj-row row g-2 mb-2 align-items-center';
+
+    // Subject col
+    const c0 = document.createElement('div');
+    c0.className = 'col-md-3';
+    c0.appendChild(createInput(subjName + '[]', { placeholder: 'Subject', size: 'sm' }));
+    row.appendChild(c0);
+
+    // Three attempt cols (MM/YYYY + Grade)
+    for (let a = 0; a < 3; a++) {
+        const c     = document.createElement('div');
+        c.className = 'col';
+        const grp   = document.createElement('div');
+        grp.className = 'input-group input-group-sm';
+        grp.appendChild(createInput(colNames[a * 2] + '[]',
+            { placeholder: 'MM/YYYY', maxLen: 7, size: 'sm' }));
+        grp.appendChild(createInput(colNames[a * 2 + 1] + '[]',
+            { placeholder: 'A', maxLen: 5, size: 'sm', style: 'max-width:58px' }));
+        c.appendChild(grp);
+        row.appendChild(c);
+    }
+
+    container.appendChild(row);
+}
+
+// Wire up the four Add Record buttons
+[
+    ['addOLevel',     'oLevelRows',      'o_subject',
+     ['o_a1_month','o_a1_grade','o_a2_month','o_a2_grade','o_a3_month','o_a3_grade']],
+    ['addPrincipal',  'principalRows',   'a_principal_subject',
+     ['ap_a1_month','ap_a1_grade','ap_a2_month','ap_a2_grade','ap_a3_month','ap_a3_grade']],
+    ['addSubsidiary', 'subsidiaryRows',  'a_subsidiary_subject',
+     ['as_a1_month','as_a1_grade','as_a2_month','as_a2_grade','as_a3_month','as_a3_grade']],
+].forEach(([btnId, containerId, subjName, colNames]) => {
+    const btn = document.getElementById(btnId);
+    if (btn) btn.addEventListener('click', () => addSubjectRow(containerId, subjName, colNames));
+});
+
 // ── Client-side validation – step 7 (final submit) only ──────────────────
 // Steps 1-6 rely exclusively on server-side validation so the red borders
 // never appear while navigating between steps with "Next".
