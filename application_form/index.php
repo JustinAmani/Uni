@@ -1010,7 +1010,11 @@ require_once __DIR__ . '/../includes/navbar.php';
                 <div class="record-block mb-3">
                     <h6 class="section-label">Applicant Declaration</h6>
                     <p class="mb-3">
-                        I, <strong><?= e(trim(($app['first_name'] ?? '') . ' ' . ($app['last_name'] ?? ''))) ?></strong>,
+                        <?php
+                        $declName = trim(($app['first_name'] ?? '') . ' ' . ($app['last_name'] ?? ''));
+                        if (empty($declName)) { $declName = getCurrentUserName(); }
+                        ?>
+                        I, <strong><?= e($declName) ?></strong>,
                         solemnly declare that if admitted to the University, I will diligently follow
                         the course of study for which I am selected till its termination, that I will
                         inform the University in writing and without delay if I withdraw from the course
