@@ -448,7 +448,7 @@ while (count($courses)    < 3) $courses[]    = [];
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">First Name <span class="text-danger">*</span></label>
-                        <input type="text" name="first_name" class="form-control" required
+                        <input type="text" name="first_name" class="form-control"
                                value="<?= e($app['first_name'] ?? '') ?>" maxlength="100">
                     </div>
                     <div class="col-md-3">
@@ -458,7 +458,7 @@ while (count($courses)    < 3) $courses[]    = [];
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Last Name <span class="text-danger">*</span></label>
-                        <input type="text" name="last_name" class="form-control" required
+                        <input type="text" name="last_name" class="form-control"
                                value="<?= e($app['last_name'] ?? '') ?>" maxlength="100">
                     </div>
                     <div class="col-md-4">
@@ -468,7 +468,7 @@ while (count($courses)    < 3) $courses[]    = [];
                     </div>
                     <div class="col-md-2">
                         <label class="form-label">Gender <span class="text-danger">*</span></label>
-                        <select name="gender" class="form-select" required>
+                        <select name="gender" class="form-select">
                             <option value="">Select</option>
                             <?php foreach (['Male','Female','Other'] as $g): ?>
                                 <option value="<?= $g ?>" <?= ($app['gender'] ?? '') === $g ? 'selected' : '' ?>>
@@ -479,13 +479,13 @@ while (count($courses)    < 3) $courses[]    = [];
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Date of Birth <span class="text-danger">*</span></label>
-                        <input type="date" name="date_of_birth" class="form-control" required
+                        <input type="date" name="date_of_birth" class="form-control"
                                value="<?= e($app['date_of_birth'] ?? '') ?>"
                                max="<?= date('Y-m-d') ?>">
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Marital Status <span class="text-danger">*</span></label>
-                        <select name="marital_status" class="form-select" required>
+                        <select name="marital_status" class="form-select">
                             <option value="">Select</option>
                             <?php foreach (['Single','Married','Divorced','Widowed','Other'] as $m): ?>
                                 <option value="<?= $m ?>" <?= ($app['marital_status'] ?? '') === $m ? 'selected' : '' ?>>
@@ -496,7 +496,7 @@ while (count($courses)    < 3) $courses[]    = [];
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">National ID / Passport No <span class="text-danger">*</span></label>
-                        <input type="text" name="national_id" class="form-control" required
+                        <input type="text" name="national_id" class="form-control"
                                value="<?= e($app['national_id'] ?? '') ?>" maxlength="100">
                     </div>
                     <div class="col-md-4">
@@ -506,17 +506,17 @@ while (count($courses)    < 3) $courses[]    = [];
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Nationality <span class="text-danger">*</span></label>
-                        <input type="text" name="nationality" class="form-control" required
+                        <input type="text" name="nationality" class="form-control"
                                value="<?= e($app['nationality'] ?? '') ?>" maxlength="100">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Email Address <span class="text-danger">*</span></label>
-                        <input type="email" name="email" class="form-control" required
+                        <input type="email" name="email" class="form-control"
                                value="<?= e($app['email'] ?? '') ?>" maxlength="255">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
-                        <input type="tel" name="mobile_number" class="form-control" required
+                        <input type="tel" name="mobile_number" class="form-control"
                                value="<?= e($app['mobile_number'] ?? '') ?>" maxlength="30">
                     </div>
                     <div class="col-md-4">
@@ -531,12 +531,12 @@ while (count($courses)    < 3) $courses[]    = [];
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label">Address Line 1 <span class="text-danger">*</span></label>
-                        <input type="text" name="perm_address_line1" class="form-control" required
+                        <input type="text" name="perm_address_line1" class="form-control"
                                value="<?= e($app['perm_address_line1'] ?? '') ?>" maxlength="255">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Town / City <span class="text-danger">*</span></label>
-                        <input type="text" name="perm_town" class="form-control" required
+                        <input type="text" name="perm_town" class="form-control"
                                value="<?= e($app['perm_town'] ?? '') ?>" maxlength="100">
                     </div>
                     <div class="col-md-4">
@@ -551,7 +551,7 @@ while (count($courses)    < 3) $courses[]    = [];
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Country <span class="text-danger">*</span></label>
-                        <input type="text" name="perm_country" class="form-control" required
+                        <input type="text" name="perm_country" class="form-control"
                                value="<?= e($app['perm_country'] ?? '') ?>" maxlength="100">
                     </div>
                     <div class="col-md-4">
@@ -590,7 +590,7 @@ while (count($courses)    < 3) $courses[]    = [];
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label">Guardian Name <span class="text-danger">*</span></label>
-                        <input type="text" name="guardian_name" class="form-control" required
+                        <input type="text" name="guardian_name" class="form-control"
                                value="<?= e($app['guardian_name'] ?? '') ?>" maxlength="200">
                     </div>
                     <div class="col-md-6">
@@ -686,7 +686,7 @@ while (count($courses)    < 3) $courses[]    = [];
                     <div class="col">
                         <label class="form-label">Course <?= $i === 1 ? '<span class="text-danger">*</span>' : '' ?></label>
                         <select name="course_<?= $i ?>" class="form-select course-select"
-                                id="courseSelect<?= $i ?>" <?= $i === 1 ? 'required' : '' ?>>
+                                id="courseSelect<?= $i ?>">
                             <option value="">-- Select Course --</option>
                             <?php foreach (COURSES as $fac => $courseList): ?>
                                 <?php foreach ($courseList as $course): ?>
@@ -709,7 +709,7 @@ while (count($courses)    < 3) $courses[]    = [];
 
     <?php elseif ($step === 3): ?>
     <!-- ═══════ STEP 3: Education ════════════════════════════════════════════ -->
-    <form method="POST" action="<?= APP_URL ?>/application_form/index.php" id="stepForm">
+    <form method="POST" action="<?= APP_URL ?>/application_form/index.php" novalidate id="stepForm">
         <input type="hidden" name="step" value="3">
 
         <!-- 3a: Secondary Schools -->
@@ -822,7 +822,7 @@ while (count($courses)    < 3) $courses[]    = [];
 
     <?php elseif ($step === 4): ?>
     <!-- ═══════ STEP 4: Employment History ═══════════════════════════════════ -->
-    <form method="POST" action="<?= APP_URL ?>/application_form/index.php" id="stepForm">
+    <form method="POST" action="<?= APP_URL ?>/application_form/index.php" novalidate id="stepForm">
         <input type="hidden" name="step" value="4">
         <div class="card shadow-sm border-0 mb-3">
             <div class="card-header udm-card-header py-2 d-flex justify-content-between align-items-center">
@@ -893,7 +893,7 @@ while (count($courses)    < 3) $courses[]    = [];
     <?php elseif ($step === 5): ?>
     <!-- ═══════ STEP 5: Document Upload ══════════════════════════════════════ -->
     <form method="POST" action="<?= APP_URL ?>/application_form/index.php"
-          enctype="multipart/form-data" id="stepForm">
+          enctype="multipart/form-data" novalidate id="stepForm">
         <input type="hidden" name="step" value="5">
         <div class="card shadow-sm border-0 mb-3">
             <div class="card-header udm-card-header py-2">
@@ -927,8 +927,7 @@ while (count($courses)    < 3) $courses[]    = [];
                                 <label class="text-muted small">Replace:</label>
                             <?php endif; ?>
                             <input type="file" name="<?= $type ?>" class="form-control form-control-sm"
-                                   accept=".pdf,.jpg,.jpeg,.png"
-                                   <?= $required && !$existing ? 'required' : '' ?>>
+                                   accept=".pdf,.jpg,.jpeg,.png">
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -940,7 +939,7 @@ while (count($courses)    < 3) $courses[]    = [];
 
     <?php elseif ($step === 6): ?>
     <!-- ═══════ STEP 6: Payment ═══════════════════════════════════════════════ -->
-    <form method="POST" action="<?= APP_URL ?>/application_form/index.php" id="stepForm">
+    <form method="POST" action="<?= APP_URL ?>/application_form/index.php" novalidate id="stepForm">
         <input type="hidden" name="step" value="6">
         <div class="card shadow-sm border-0 mb-3">
             <div class="card-header udm-card-header py-2">
@@ -974,7 +973,7 @@ while (count($courses)    < 3) $courses[]    = [];
                                 <label class="form-label fw-medium">
                                     Payment Receipt / Reference Number <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" name="payment_receipt" class="form-control" required
+                                <input type="text" name="payment_receipt" class="form-control"
                                        placeholder="e.g. WU-123456789" maxlength="50">
                                 <div class="form-text">
                                     Enter the reference or receipt number from your payment transaction.
@@ -995,7 +994,7 @@ while (count($courses)    < 3) $courses[]    = [];
 
     <?php elseif ($step === 7): ?>
     <!-- ═══════ STEP 7: Declaration ═══════════════════════════════════════════ -->
-    <form method="POST" action="<?= APP_URL ?>/application_form/index.php" id="stepForm">
+    <form method="POST" action="<?= APP_URL ?>/application_form/index.php" novalidate id="stepForm">
         <input type="hidden" name="step" value="7">
         <div class="card shadow-sm border-0 mb-3">
             <div class="card-header udm-card-header py-2">

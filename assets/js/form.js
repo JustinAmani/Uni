@@ -95,35 +95,27 @@ function bindRemoveButtons() {
 }
 bindRemoveButtons();
 
-// ── Client-side required-field highlighting ───────────────────────────────
-const stepForm = document.getElementById('stepForm');
-if (stepForm) {
+// ── Client-side validation – step 7 (final submit) only ──────────────────
+// Steps 1-6 rely exclusively on server-side validation so the red borders
+// never appear while navigating between steps with "Next".
+const stepForm   = document.getElementById('stepForm');
+const hiddenStep = stepForm?.querySelector('[name="step"]');
+const isFinalStep = hiddenStep && hiddenStep.value === '7';
+
+if (stepForm && isFinalStep) {
     stepForm.addEventListener('submit', function (e) {
-        // Only validate on "next" action, not "Save & Exit"
-        const action = document.activeElement?.value;
-        if (action === 'exit') return;
-
-        let firstInvalid = null;
-        this.querySelectorAll('[required]').forEach(field => {
-            if (!field.value.trim()) {
-                field.classList.add('is-invalid');
-                if (!firstInvalid) firstInvalid = field;
-            } else {
-                field.classList.remove('is-invalid');
-            }
-        });
-
-        if (firstInvalid) {
+        const declCheck = document.getElementById('declCheck');
+        if (declCheck && !declCheck.checked) {
             e.preventDefault();
-            firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            firstInvalid.focus();
+            declCheck.classList.add('is-invalid');
+            declCheck.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     });
 
-    // Clear invalid state on input
-    stepForm.querySelectorAll('[required]').forEach(field => {
-        field.addEventListener('input', () => field.classList.remove('is-invalid'));
-    });
+    const declCheck = document.getElementById('declCheck');
+    if (declCheck) {
+        declCheck.addEventListener('change', () => declCheck.classList.remove('is-invalid'));
+    }
 }
 
 // ── DOB → show/hide guardian section dynamically ──────────────────────────
