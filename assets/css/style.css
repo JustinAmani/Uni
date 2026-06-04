@@ -215,26 +215,16 @@ body {
     border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0;
 }
 
-/* ── ALL card bodies on the form page = sky-blue block ───────────────────── */
-.app-form-page .card > .card-body {
+/* ── Section block – sky-blue background, rounded all 4 corners ─────────── */
+.section-block {
     background: var(--udm-blue-light);
-    border-radius: 0 0 10px 10px;   /* round bottom corners to match card */
+    border-radius: 10px;
+    padding: .9rem 1rem 1rem;
+    margin-bottom: 1rem;
 }
+.section-block:last-child { margin-bottom: 0; }
 
-/* ── section-blocks INSIDE a card-body (steps 1 & 2 sub-sections) ────────── *
- * Shown as white panels so they visually separate within the blue card-body   */
-.app-form-page .card > .card-body > .section-block {
-    background: #ffffff;
-    border: 1px solid #bcd6ee;
-    border-radius: 8px;
-    padding: .85rem 1rem 1rem;
-    margin-bottom: .85rem;
-}
-.app-form-page .card > .card-body > .section-block:last-child {
-    margin-bottom: 0;
-}
-
-/* Section label – title text inside each block */
+/* Section label – title inside the block, plain text */
 .section-label {
     display: block;
     font-size: .68rem;

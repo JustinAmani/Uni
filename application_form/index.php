@@ -689,6 +689,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                     3a. Secondary Schools / Educational Institutions Attended</h6>
             </div>
             <div class="card-body">
+            <div class="section-block">
                 <div class="table-responsive">
                     <table class="table table-bordered align-middle">
                         <thead class="table-light">
@@ -737,6 +738,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                         </tbody>
                     </table>
                 </div>
+            </div><!-- /section-block 3a -->
             </div>
         </div>
 
@@ -746,8 +748,10 @@ require_once __DIR__ . '/../includes/navbar.php';
                 <h6 class="mb-0"><i class="bi bi-journal-text me-1"></i> 3b. SC / GCE "O" Level Results</h6>
             </div>
             <div class="card-body">
+            <div class="section-block">
                 <?php echo renderResultsTable('o', $oResults, 'o_subject', ['o_a1_month','o_a1_grade','o_a2_month','o_a2_grade','o_a3_month','o_a3_grade'], $currentYear); ?>
             </div>
+            </div><!-- /card-body 3b -->
         </div>
 
         <!-- 3c: A-Level Results -->
@@ -756,11 +760,13 @@ require_once __DIR__ . '/../includes/navbar.php';
                 <h6 class="mb-0"><i class="bi bi-journal-text me-1"></i> 3c. HSC / GCE "A" Level Results</h6>
             </div>
             <div class="card-body">
+            <div class="section-block">
                 <h6 class="text-muted small fw-semibold mb-2">PRINCIPAL / ADVANCED LEVEL</h6>
                 <?php echo renderResultsTable('ap', $principal, 'a_principal_subject', ['ap_a1_month','ap_a1_grade','ap_a2_month','ap_a2_grade','ap_a3_month','ap_a3_grade'], $currentYear, 3); ?>
                 <h6 class="text-muted small fw-semibold mt-3 mb-2">SUBSIDIARY LEVEL</h6>
                 <?php echo renderResultsTable('as', $subsidiary, 'a_subsidiary_subject', ['as_a1_month','as_a1_grade','as_a2_month','as_a2_grade','as_a3_month','as_a3_grade'], $currentYear, 4); ?>
             </div>
+            </div><!-- /card-body 3c -->
         </div>
 
         <!-- 3d: Language Certificate -->
@@ -769,6 +775,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                 <h6 class="mb-0"><i class="bi bi-translate me-1"></i> 3d. Language Certificate <span class="badge bg-danger ms-1">Mandatory</span></h6>
             </div>
             <div class="card-body">
+            <div class="section-block">
                 <p class="text-muted small mb-2">Check as appropriate and attach certificate when uploading documents.</p>
                 <div class="form-check mb-2">
                     <input class="form-check-input" type="checkbox" id="engCert" name="has_english_cert"
@@ -785,6 +792,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                     </label>
                 </div>
             </div>
+            </div><!-- /card-body 3d -->
         </div>
 
         <?php include __DIR__ . '/partials/form_buttons.php'; ?>
@@ -802,6 +810,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                 </button>
             </div>
             <div class="card-body">
+            <div class="section-block">
                 <p class="text-muted small mb-3">
                     <i class="bi bi-info-circle me-1"></i>
                     If you have no employment history, leave this section blank and click Next.
@@ -855,7 +864,8 @@ require_once __DIR__ . '/../includes/navbar.php';
                     </div>
                 <?php endforeach; ?>
                 </div>
-            </div>
+            </div><!-- /section-block step 4 -->
+            </div><!-- /card-body step 4 -->
         </div>
         <?php include __DIR__ . '/partials/form_buttons.php'; ?>
     </form>
@@ -870,6 +880,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                 <h6 class="mb-0"><i class="bi bi-cloud-upload me-1"></i> Step 5: Document Upload</h6>
             </div>
             <div class="card-body">
+            <div class="section-block">
                 <div class="alert alert-info py-2 small mb-3">
                     <i class="bi bi-info-circle me-1"></i>
                     Accepted formats: <strong>PDF, JPG, PNG</strong> — Max size: <strong>5 MB</strong> per file.<br>
@@ -902,7 +913,8 @@ require_once __DIR__ . '/../includes/navbar.php';
                     </div>
                 <?php endforeach; ?>
                 </div>
-            </div>
+            </div><!-- /section-block step 5 -->
+            </div><!-- /card-body step 5 -->
         </div>
         <?php include __DIR__ . '/partials/form_buttons.php'; ?>
     </form>
@@ -916,6 +928,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                 <h6 class="mb-0"><i class="bi bi-credit-card me-1"></i> Step 6: Application Fee Payment</h6>
             </div>
             <div class="card-body">
+            <div class="section-block">
                 <div class="row justify-content-center">
                     <div class="col-md-7">
                         <div class="payment-summary p-4 rounded border text-center mb-4">
@@ -957,7 +970,8 @@ require_once __DIR__ . '/../includes/navbar.php';
                         <?php endif; ?>
                     </div>
                 </div>
-            </div>
+            </div><!-- /section-block step 6 -->
+            </div><!-- /card-body step 6 -->
         </div>
         <?php include __DIR__ . '/partials/form_buttons.php'; ?>
     </form>
@@ -971,6 +985,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                 <h6 class="mb-0"><i class="bi bi-pen me-1"></i> Step 7: Declaration and Submission</h6>
             </div>
             <div class="card-body">
+            <div class="section-block">
                 <div class="declaration-box p-4 rounded border bg-light mb-4">
                     <p class="mb-2">
                         I, <strong><?= e(trim(($app['first_name'] ?? '') . ' ' . ($app['last_name'] ?? ''))) ?></strong>,
@@ -997,7 +1012,8 @@ require_once __DIR__ . '/../includes/navbar.php';
                     in Mauritius on registration day. Failure to do so will result in your admission
                     being withheld.
                 </div>
-            </div>
+            </div><!-- /section-block step 7 -->
+            </div><!-- /card-body step 7 -->
         </div>
 
         <div class="d-flex justify-content-between">
