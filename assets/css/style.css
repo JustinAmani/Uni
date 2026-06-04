@@ -244,8 +244,8 @@ body {
     box-shadow: 0 0 0 .2rem rgba(26,170,150,.18);
 }
 
-/* ── Individual record card inside a section (employment, document, etc.) ── */
-/* Same look as section-block sub-sections: white bg + blue border + radius  */
+/* ── record-block: white panel on the sky-blue card-body background ──────── */
+/* Used for: employment records, document upload cards, declaration text      */
 .record-block {
     background: #ffffff;
     border: 1px solid #bcd6ee;
@@ -256,6 +256,13 @@ body {
 }
 .record-block:last-child { margin-bottom: 0; }
 .record-block:hover      { border-color: var(--udm-blue); }
+
+/* record-block directly inside card-body (steps 5, 7) — same as section-block */
+.app-form-page .card > .card-body > .record-block {
+    background: #ffffff;
+    border: 1px solid #bcd6ee;
+    border-radius: 8px;
+}
 
 /* ────────────────── Document upload ────────────────────────────────────── */
 .doc-upload-card {

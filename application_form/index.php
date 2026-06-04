@@ -902,31 +902,30 @@ require_once __DIR__ . '/../includes/navbar.php';
                 <h6 class="mb-0"><i class="bi bi-cloud-upload me-1"></i> Step 5: Document Upload</h6>
             </div>
             <div class="card-body">
-            <div class="section-block">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h6 class="section-label mb-0">Required Documents</h6>
-                </div>
+                <!-- Info text directly on blue background -->
                 <div class="alert alert-info py-2 small mb-3">
                     <i class="bi bi-info-circle me-1"></i>
                     Accepted formats: <strong>PDF, JPG, PNG</strong> — Max size: <strong>5 MB</strong> per file.<br>
                     <span class="text-danger fw-semibold">*</span> Passport Photo and National ID are required.
                     Originals must be presented on registration day.
                 </div>
+
+                <!-- Each document = individual record-block directly on blue bg -->
                 <div id="docRows" class="row g-3">
                 <?php foreach (DOCUMENT_TYPES as $type => $label):
                     $existing = $docMap[$type] ?? null;
                     $required = in_array($type, ['passport_photo','national_id']);
                 ?>
                     <div class="col-md-6">
-                        <div class="doc-upload-card record-block <?= $existing ? 'border-success bg-success bg-opacity-10' : '' ?>">
-                            <label class="form-label fw-medium">
+                        <div class="doc-upload-card record-block <?= $existing ? 'border-success' : '' ?>">
+                            <h6 class="section-label">
                                 <?= e($label) ?>
-                                <?php if ($required): ?><span class="text-danger">*</span><?php endif; ?>
-                            </label>
+                                <?php if ($required): ?><span class="text-danger ms-1">*</span><?php endif; ?>
+                            </h6>
                             <?php if ($existing): ?>
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <i class="bi bi-check-circle-fill text-success"></i>
-                                    <span class="small text-success">
+                                    <span class="small text-success fw-medium">
                                         <?= e($existing['original_name']) ?> – uploaded
                                     </span>
                                 </div>
@@ -938,13 +937,13 @@ require_once __DIR__ . '/../includes/navbar.php';
                     </div>
                 <?php endforeach; ?>
                 </div>
-                <!-- Add extra document slot -->
+
+                <!-- Add more documents -->
                 <div class="mt-3">
                     <button type="button" class="btn btn-sm btn-udm-primary" id="addDocSlot">
                         <i class="bi bi-plus-circle me-1"></i> Add Another Document
                     </button>
                 </div>
-            </div><!-- /section-block step 5 -->
             </div><!-- /card-body step 5 -->
         </div>
         <?php include __DIR__ . '/partials/form_buttons.php'; ?>
@@ -1016,9 +1015,9 @@ require_once __DIR__ . '/../includes/navbar.php';
                 <h6 class="mb-0"><i class="bi bi-pen me-1"></i> Step 7: Declaration and Submission</h6>
             </div>
             <div class="card-body">
-            <div class="section-block">
-                <div class="declaration-box p-4 rounded border bg-light mb-4">
-                    <p class="mb-2">
+                <div class="record-block mb-3">
+                    <h6 class="section-label">Applicant Declaration</h6>
+                    <p class="mb-3">
                         I, <strong><?= e(trim(($app['first_name'] ?? '') . ' ' . ($app['last_name'] ?? ''))) ?></strong>,
                         solemnly declare that if admitted to the University, I will diligently follow
                         the course of study for which I am selected till its termination, that I will
@@ -1027,7 +1026,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                         that I will pay in advance all fees and dues required and I also declare that all
                         the above given information is true and correct.
                     </p>
-                    <div class="form-check mt-3">
+                    <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="declCheck"
                                name="declaration_agreed" value="1" required>
                         <label class="form-check-label fw-semibold" for="declCheck">
@@ -1037,13 +1036,16 @@ require_once __DIR__ . '/../includes/navbar.php';
                     </div>
                 </div>
 
-                <div class="alert alert-warning py-2 small">
-                    <i class="bi bi-exclamation-triangle me-1"></i>
-                    <strong>Important:</strong> Original certificates must be presented upon arrival
-                    in Mauritius on registration day. Failure to do so will result in your admission
-                    being withheld.
+                <div class="record-block">
+                    <div class="d-flex align-items-start gap-2">
+                        <i class="bi bi-exclamation-triangle-fill text-warning mt-1"></i>
+                        <div class="small">
+                            <strong>Important:</strong> Original certificates must be presented upon arrival
+                            in Mauritius on registration day. Failure to do so will result in your admission
+                            being withheld.
+                        </div>
+                    </div>
                 </div>
-            </div><!-- /section-block step 7 -->
             </div><!-- /card-body step 7 -->
         </div>
 
