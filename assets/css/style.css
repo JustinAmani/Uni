@@ -1,62 +1,48 @@
 /* ── UdM Application Portal – Custom Styles ─────────────────────────────── */
 
 :root {
-    --udm-teal:         #1aaa96;
-    --udm-teal-dark:    #148a78;
-    --udm-teal-light:   #e8f7f5;
-    --udm-title:        #0f8a78;
-    --udm-border:       #d0ebe7;
-    --udm-bg:           #f4f8fa;
-    --udm-text:         #1c3a36;
-    /* UdM blue from logo shield – used for section labels */
-    --udm-blue:         #1a6fa8;
-    --udm-blue-light:   #deedf8;  /* sky blue section background */
+    /* Primary blue – UdM shield colour */
+    --udm-blue:       #1a6fa8;
+    --udm-blue-dark:  #155d8e;
+    --udm-blue-mid:   #1e80bf;
+    --udm-blue-light: #deedf8;  /* sky-blue section / card-body background */
+    --udm-blue-bg:    #f0f6fc;  /* page background */
+    --udm-border:     #b8d4ef;  /* borders and separators */
+    --udm-title:      #1a6fa8;  /* headings */
 }
 
 /* ────────────────── Base ────────────────────────────────────────────────── */
-body {
-    background: var(--udm-bg);
-    color: #333;
-}
+body { background: var(--udm-blue-bg); color: #333; }
 
-/* ────────────────── Navbar – WHITE, exactly like screenshot ─────────────── */
+/* ────────────────── Navbar ──────────────────────────────────────────────── */
 .udm-navbar {
     background: #ffffff;
-    border-bottom: 1px solid #e0ecea;
+    border-bottom: 1px solid #dce8f5;
     box-shadow: 0 1px 6px rgba(0,0,0,.07);
     padding: .45rem 1.5rem;
     min-height: 64px;
 }
-
-/* The real UdM logo – sits flat on the white navbar, no box around it */
 .udm-navbar .udm-logo-img {
     height: 54px;
     width: auto;
     object-fit: contain;
-    background: #ffffff;   /* same as navbar so no visible boundary */
+    background: #ffffff;
     padding: 0;
     border-radius: 0;
     box-shadow: none;
     display: block;
 }
-
-/* Right-side welcome text – dark, not white */
-.udm-navbar .nav-welcome {
-    color: #333;
-    font-size: .87rem;
-}
-.udm-navbar .btn-outline-secondary {
-    font-size: .82rem;
-}
+.udm-navbar .nav-welcome    { color: #333; font-size: .87rem; }
+.udm-navbar .btn-outline-secondary { font-size: .82rem; }
 
 /* ────────────────── Landing hero banner ────────────────────────────────── */
 .udm-hero {
-    background: linear-gradient(135deg, #1bb8a4, #0d8a7a);
+    background: linear-gradient(135deg, var(--udm-blue-mid), var(--udm-blue-dark));
     color: #fff;
     padding: 2rem 1rem;
 }
-.udm-hero h2  { font-size: 1.5rem; font-weight: 700; }
-.udm-hero p   { font-size: .95rem; opacity: .92; }
+.udm-hero h2 { font-size: 1.5rem; font-weight: 700; }
+.udm-hero p  { font-size: .95rem; opacity: .92; }
 
 .role-btn {
     border-color: rgba(255,255,255,.55);
@@ -71,7 +57,7 @@ body {
 
 /* ────────────────── Auth cards ─────────────────────────────────────────── */
 .udm-card-header {
-    background: linear-gradient(135deg, #0d8a7a, #1bb8a4);
+    background: linear-gradient(135deg, var(--udm-blue-dark), var(--udm-blue-mid));
     color: #fff;
     border-bottom: none !important;
 }
@@ -103,7 +89,7 @@ body {
 .step-heading {
     font-size: .95rem;
     font-weight: 700;
-    color: var(--udm-teal);
+    color: var(--udm-blue);
     padding-bottom: .65rem;
     margin-bottom: 1rem;
     border-bottom: 2px solid var(--udm-border);
@@ -114,30 +100,30 @@ body {
 
 /* ────────────────── Buttons ─────────────────────────────────────────────── */
 .btn-udm-primary {
-    background: var(--udm-teal);
-    border-color: var(--udm-teal);
+    background: var(--udm-blue);
+    border-color: var(--udm-blue);
     color: #fff;
     font-weight: 500;
     transition: background .18s, border-color .18s;
 }
 .btn-udm-primary:hover, .btn-udm-primary:focus {
-    background: var(--udm-teal-dark);
-    border-color: var(--udm-teal-dark);
+    background: var(--udm-blue-dark);
+    border-color: var(--udm-blue-dark);
     color: #fff;
 }
 
-.bg-udm   { background-color: var(--udm-teal) !important; }
-.text-udm { color: var(--udm-teal) !important; }
+.bg-udm   { background-color: var(--udm-blue) !important; }
+.text-udm { color: var(--udm-blue) !important; }
 
 /* ────────────────── Footer ──────────────────────────────────────────────── */
 .udm-footer {
-    background: #0d7a6c;
+    background: var(--udm-blue-dark);
     color: rgba(255,255,255,.85);
 }
-.udm-footer a { color: #a0ede4; }
+.udm-footer a { color: #a0cef0; }
 .udm-footer a:hover { color: #fff; }
 
-/* ────────────────── Stepper – matches screenshot exactly ───────────────── */
+/* ────────────────── Progress Stepper ───────────────────────────────────── */
 .udm-stepper {
     display: flex;
     align-items: flex-start;
@@ -147,7 +133,6 @@ body {
     gap: 0;
     margin-bottom: 1.5rem;
 }
-
 .stepper-item {
     display: flex;
     flex-direction: column;
@@ -155,17 +140,17 @@ body {
     flex-shrink: 0;
 }
 
-/* Lines between circles */
+/* Lines */
 .stepper-line {
     flex: 1;
     height: 2px;
-    background: #d5e8e5;
+    background: #ccdde8;
     margin-top: 18px;
     min-width: 35px;
     max-width: 80px;
     transition: background .3s;
 }
-.stepper-line.filled { background: var(--udm-teal); }
+.stepper-line.filled { background: var(--udm-blue); }
 
 /* Circles */
 .stepper-circle {
@@ -181,55 +166,61 @@ body {
     text-decoration: none !important;
     transition: all .2s;
 }
-/* Completed: filled teal */
-.stepper-circle.done {
-    background: var(--udm-teal);
-    color: #fff;
-    border-color: var(--udm-teal);
-}
-/* Current: white with teal border */
-.stepper-circle.current {
-    background: #fff;
-    color: var(--udm-teal);
-    border-color: var(--udm-teal);
-    box-shadow: 0 0 0 3px rgba(26,170,150,.15);
-}
-/* Future: light grey */
-.stepper-circle.pending {
-    background: #f0f2f2;
-    color: #9eaaa8;
-    border-color: #d5e0de;
-    pointer-events: none;
-}
-
-.stepper-circle.done:hover { background: var(--udm-teal-dark); }
+.stepper-circle.done    { background: var(--udm-blue); color: #fff; border-color: var(--udm-blue); }
+.stepper-circle.current { background: #fff; color: var(--udm-blue); border-color: var(--udm-blue); box-shadow: 0 0 0 3px rgba(26,111,168,.15); }
+.stepper-circle.pending { background: #f0f2f4; color: #9eaab8; border-color: #ccdde8; pointer-events: none; }
+.stepper-circle.done:hover { background: var(--udm-blue-dark); }
 
 /* Labels */
-.stepper-label {
-    font-size: .62rem;
-    color: #8aaeab;
-    margin-top: 5px;
-    text-align: center;
-    white-space: nowrap;
-}
-.stepper-item.current .stepper-label { color: var(--udm-teal); font-weight: 600; }
-.stepper-item.done    .stepper-label { color: var(--udm-teal); }
+.stepper-label { font-size: .62rem; color: #8aaabe; margin-top: 5px; text-align: center; white-space: nowrap; }
+.stepper-item.current .stepper-label { color: var(--udm-blue); font-weight: 600; }
+.stepper-item.done    .stepper-label { color: var(--udm-blue); }
 
-/* ────────────────── Form page body ─────────────────────────────────────── */
-.app-form-page { background: #f4f8f7; }
+/* ────────────────── Form page ───────────────────────────────────────────── */
+.app-form-page { background: var(--udm-blue-bg); }
 
-/* udm-card-header-form removed – step titles are now .step-heading inside card-body */
-
-/* ── Section block – sky-blue background, rounded all 4 corners ─────────── */
-.section-block {
+/* ALL card bodies = sky-blue background */
+.app-form-page .card > .card-body {
     background: var(--udm-blue-light);
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
+}
+
+/* ── Section block (white panel inside sky-blue card-body) ───────────────── */
+.section-block {
+    background: #ffffff;
+    border: 1px solid var(--udm-border);
+    border-radius: 8px;
     padding: .9rem 1rem 1rem;
     margin-bottom: 1rem;
 }
 .section-block:last-child { margin-bottom: 0; }
 
-/* Section label – title inside the block, plain text */
+/* section-blocks that are DIRECT children of card-body */
+.app-form-page .card > .card-body > .section-block {
+    background: #ffffff;
+    border: 1px solid var(--udm-border);
+    border-radius: 8px;
+}
+
+/* ── record-block (white panel – employment, docs, declaration) ────────── */
+.record-block {
+    background: #ffffff;
+    border: 1px solid var(--udm-border);
+    border-radius: 8px;
+    padding: .85rem 1rem 1rem;
+    margin-bottom: .75rem;
+    transition: border-color .2s;
+}
+.record-block:last-child { margin-bottom: 0; }
+.record-block:hover      { border-color: var(--udm-blue); }
+
+.app-form-page .card > .card-body > .record-block {
+    background: #ffffff;
+    border: 1px solid var(--udm-border);
+    border-radius: 8px;
+}
+
+/* ── Section label (uppercase title inside a block) ──────────────────────── */
 .section-label {
     display: block;
     font-size: .68rem;
@@ -243,36 +234,16 @@ body {
     background: transparent;
 }
 
-/* Input focus ring */
+/* ── Input focus ring ────────────────────────────────────────────────────── */
 .form-control:focus, .form-select:focus {
-    border-color: var(--udm-teal);
-    box-shadow: 0 0 0 .2rem rgba(26,170,150,.18);
+    border-color: var(--udm-blue);
+    box-shadow: 0 0 0 .2rem rgba(26,111,168,.18);
 }
 
-/* ── record-block: white panel on the sky-blue card-body background ──────── */
-/* Used for: employment records, document upload cards, declaration text      */
-.record-block {
-    background: #ffffff;
-    border: 1px solid #bcd6ee;
-    border-radius: 8px;
-    padding: .85rem 1rem 1rem;
-    margin-bottom: .75rem;
-    transition: border-color .2s;
-}
-.record-block:last-child { margin-bottom: 0; }
-.record-block:hover      { border-color: var(--udm-blue); }
-
-/* record-block directly inside card-body (steps 5, 7) — same as section-block */
-.app-form-page .card > .card-body > .record-block {
-    background: #ffffff;
-    border: 1px solid #bcd6ee;
-    border-radius: 8px;
-}
-
-/* ────────────────── Document upload ────────────────────────────────────── */
+/* ── Document upload cards ───────────────────────────────────────────────── */
 .doc-upload-card {
     background: #ffffff;
-    border: 1px solid #bcd6ee !important;
+    border: 1px solid var(--udm-border) !important;
     border-radius: 8px;
     padding: .85rem !important;
     transition: border-color .2s, box-shadow .2s;
@@ -282,15 +253,15 @@ body {
     box-shadow: 0 2px 8px rgba(26,111,168,.1);
 }
 
-/* ────────────────── Declaration & Payment boxes ────────────────────────── */
+/* ── Declaration & Payment ───────────────────────────────────────────────── */
 .declaration-box, .payment-summary {
-    background: #f0faf8;
+    background: var(--udm-blue-light);
     border-color: var(--udm-border) !important;
     border-radius: .5rem;
 }
 .declaration-box { font-size: .94rem; line-height: 1.75; }
 
-/* ────────────────── Agent dashboard ────────────────────────────────────── */
+/* ── Agent dashboard stat cards ─────────────────────────────────────────── */
 .stat-card {
     cursor: pointer;
     text-decoration: none;
@@ -303,7 +274,7 @@ body {
     color: inherit;
 }
 
-/* ────────────────── Responsive ─────────────────────────────────────────── */
+/* ── Responsive ──────────────────────────────────────────────────────────── */
 @media (max-width: 576px) {
     .udm-stepper { justify-content: flex-start; }
     .stepper-label { display: none; }
