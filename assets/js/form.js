@@ -226,6 +226,57 @@ if (sBtn) {
     });
 }
 
+// ── Step 5: Add another document slot ────────────────────────────────────
+var addDocBtn = document.getElementById('addDocSlot');
+if (addDocBtn) {
+    var extraDocCount = 0;
+    addDocBtn.addEventListener('click', function() {
+        extraDocCount++;
+        var container = document.getElementById('docRows');
+        if (!container) { return; }
+
+        var col = document.createElement('div');
+        col.className = 'col-md-6';
+
+        var card = document.createElement('div');
+        card.className = 'doc-upload-card p-3 rounded border position-relative';
+
+        // Remove button (top-right)
+        var rmBtn = document.createElement('button');
+        rmBtn.type = 'button';
+        rmBtn.className = 'btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-1';
+        rmBtn.setAttribute('aria-label', 'Remove');
+        rmBtn.textContent = '✕';
+        rmBtn.addEventListener('click', function() { col.remove(); });
+
+        // Label
+        var lbl = document.createElement('label');
+        lbl.className = 'form-label fw-medium';
+        lbl.textContent = 'Additional Document ' + extraDocCount;
+
+        // File input
+        var inp = document.createElement('input');
+        inp.type = 'file';
+        inp.name = 'other_extra[]';
+        inp.className = 'form-control form-control-sm';
+        inp.accept = '.pdf,.jpg,.jpeg,.png';
+
+        card.appendChild(rmBtn);
+        card.appendChild(lbl);
+        card.appendChild(inp);
+        col.appendChild(card);
+        container.appendChild(col);
+
+        // Validate file size on change
+        inp.addEventListener('change', function() {
+            if (this.files[0] && this.files[0].size > 5 * 1024 * 1024) {
+                this.value = '';
+                alert('File too large (max 5 MB).');
+            }
+        });
+    });
+}
+
 // ── Client-side validation – step 7 (final submit) only ──────────────────
 // Steps 1-6 rely exclusively on server-side validation so the red borders
 // never appear while navigating between steps with "Next".

@@ -169,6 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // ── Step 5: upload files if provided, no mandatory check ──────────
         case 5:
             $uploadErrors = [];
+            // Standard document types
             foreach (DOCUMENT_TYPES as $type => $label) {
                 if (!empty($_FILES[$type]) && $_FILES[$type]['error'] !== UPLOAD_ERR_NO_FILE) {
                     $result = handleDocumentUpload($appId, $type, $_FILES[$type]);
@@ -177,8 +178,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
+            // Extra "other" documents added via "Add Another Document" button
+            if (!empty($_FILES['other_extra'])) {
+                $extras = $_FILES['other_extra'];
+                // Convert single file to array format if needed
+                if (!is_array($extras['name'])) {
+                    $extras = array_map(fn($v) => [$v], $extras);
+                }
+                $count = count($extras['name']);
+                for ($ei = 0; $ei < $count; $ei++) {
+                    if ($extras['error'][$ei] === UPLOAD_ERR_NO_FILE) continue;
+                    $file = [
+                        'name'     => $extras['name'][$ei],
+                        'tmp_name' => $extras['tmp_name'][$ei],
+                        'size'     => $extras['size'][$ei],
+                        'error'    => $extras['error'][$ei],
+                    ];
+                    $result = handleDocumentUpload($appId, 'other', $file);
+                    if (!$result['success']) {
+                        $uploadErrors[] = "Additional document: " . $result['message'];
+                    }
+                }
+            }
             if ($uploadErrors) {
-                // Only block on technical upload errors (wrong format / too large)
                 $_SESSION['form_errors'] = $uploadErrors;
                 header('Location: ' . APP_URL . '/application_form/index.php?step=5');
                 exit;
@@ -800,14 +822,17 @@ require_once __DIR__ . '/../includes/navbar.php';
     <form method="POST" action="<?= APP_URL ?>/application_form/index.php" novalidate id="stepForm">
         <input type="hidden" name="step" value="4">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header-form d-flex justify-content-between align-items-center">
+            <div class="card-header udm-card-header-form">
                 <h6 class="mb-0"><i class="bi bi-briefcase me-1"></i> Step 4: Employment History</h6>
-                <button type="button" class="btn btn-sm btn-outline-light" id="addEmployer">
-                    <i class="bi bi-plus-circle me-1"></i> Add Record
-                </button>
             </div>
             <div class="card-body">
             <div class="section-block">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="section-label mb-0">Employment Records</h6>
+                    <button type="button" class="btn btn-sm btn-udm-primary ms-2" id="addEmployer">
+                        <i class="bi bi-plus-circle me-1"></i> Add Record
+                    </button>
+                </div>
                 <p class="text-muted small mb-3">
                     <i class="bi bi-info-circle me-1"></i>
                     If you have no employment history, leave this section blank and click Next.
@@ -878,13 +903,16 @@ require_once __DIR__ . '/../includes/navbar.php';
             </div>
             <div class="card-body">
             <div class="section-block">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="section-label mb-0">Required Documents</h6>
+                </div>
                 <div class="alert alert-info py-2 small mb-3">
                     <i class="bi bi-info-circle me-1"></i>
                     Accepted formats: <strong>PDF, JPG, PNG</strong> — Max size: <strong>5 MB</strong> per file.<br>
                     <span class="text-danger fw-semibold">*</span> Passport Photo and National ID are required.
                     Originals must be presented on registration day.
                 </div>
-                <div class="row g-3">
+                <div id="docRows" class="row g-3">
                 <?php foreach (DOCUMENT_TYPES as $type => $label):
                     $existing = $docMap[$type] ?? null;
                     $required = in_array($type, ['passport_photo','national_id']);
@@ -909,6 +937,12 @@ require_once __DIR__ . '/../includes/navbar.php';
                         </div>
                     </div>
                 <?php endforeach; ?>
+                </div>
+                <!-- Add extra document slot -->
+                <div class="mt-3">
+                    <button type="button" class="btn btn-sm btn-udm-primary" id="addDocSlot">
+                        <i class="bi bi-plus-circle me-1"></i> Add Another Document
+                    </button>
                 </div>
             </div><!-- /section-block step 5 -->
             </div><!-- /card-body step 5 -->
