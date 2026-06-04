@@ -244,16 +244,30 @@ body {
     box-shadow: 0 0 0 .2rem rgba(26,170,150,.18);
 }
 
+/* ── Individual record card inside a section (employment, document, etc.) ── */
+/* Same look as section-block sub-sections: white bg + blue border + radius  */
+.record-block {
+    background: #ffffff;
+    border: 1px solid #bcd6ee;
+    border-radius: 8px;
+    padding: .85rem 1rem 1rem;
+    margin-bottom: .75rem;
+    transition: border-color .2s;
+}
+.record-block:last-child { margin-bottom: 0; }
+.record-block:hover      { border-color: var(--udm-blue); }
+
 /* ────────────────── Document upload ────────────────────────────────────── */
 .doc-upload-card {
-    background: #fafefe;
-    border-color: #d8ecea !important;
-    border-radius: .45rem;
+    background: #ffffff;
+    border: 1px solid #bcd6ee !important;
+    border-radius: 8px;
+    padding: .85rem !important;
     transition: border-color .2s, box-shadow .2s;
 }
 .doc-upload-card:hover {
-    border-color: var(--udm-teal) !important;
-    box-shadow: 0 2px 8px rgba(26,170,150,.1);
+    border-color: var(--udm-blue) !important;
+    box-shadow: 0 2px 8px rgba(26,111,168,.1);
 }
 
 /* ────────────────── Declaration & Payment boxes ────────────────────────── */

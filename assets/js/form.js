@@ -44,7 +44,7 @@ if (addBtn) {
         const container = document.getElementById('employmentRows');
         const idx       = container.querySelectorAll('.employment-row').length;
         const row       = document.createElement('div');
-        row.className   = 'employment-row card border mb-3 p-3 position-relative';
+        row.className   = 'employment-row record-block position-relative';
         row.innerHTML   = `
             <button type="button"
                     class="btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-2 remove-row"
@@ -239,7 +239,7 @@ if (addDocBtn) {
         col.className = 'col-md-6';
 
         var card = document.createElement('div');
-        card.className = 'doc-upload-card p-3 rounded border position-relative';
+        card.className = 'doc-upload-card record-block position-relative';
 
         // Remove button (top-right)
         var rmBtn = document.createElement('button');

@@ -839,7 +839,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                 </p>
                 <div id="employmentRows">
                 <?php foreach ($employment as $i => $emp): ?>
-                    <div class="employment-row card border mb-3 p-3 position-relative">
+                    <div class="employment-row record-block position-relative">
                         <?php if ($i > 0): ?>
                             <button type="button" class="btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-2 remove-row">
                                 <i class="bi bi-trash"></i>
@@ -918,7 +918,7 @@ require_once __DIR__ . '/../includes/navbar.php';
                     $required = in_array($type, ['passport_photo','national_id']);
                 ?>
                     <div class="col-md-6">
-                        <div class="doc-upload-card p-3 rounded border <?= $existing ? 'border-success bg-success bg-opacity-10' : '' ?>">
+                        <div class="doc-upload-card record-block <?= $existing ? 'border-success bg-success bg-opacity-10' : '' ?>">
                             <label class="form-label fw-medium">
                                 <?= e($label) ?>
                                 <?php if ($required): ?><span class="text-danger">*</span><?php endif; ?>
