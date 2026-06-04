@@ -1,26 +1,87 @@
 /* ── UdM Application Form – Client-side Logic ───────────────────────────── */
 'use strict';
 
-// ── Faculty → Course filtering ────────────────────────────────────────────
-document.querySelectorAll('.faculty-select').forEach(sel => {
-    sel.addEventListener('change', function () {
-        const idx       = this.dataset.index;
-        const courseEl  = document.getElementById('courseSelect' + idx);
-        const chosen    = this.value;
-
-        courseEl.querySelectorAll('option[data-faculty]').forEach(opt => {
+// ── Faculty → Course filtering (works on static + dynamic rows) ──────────
+function bindFacultyFilter(row) {
+    var sel = row.querySelector('.faculty-sel');
+    if (!sel) { return; }
+    sel.addEventListener('change', function() {
+        var chosen    = this.value;
+        var courseEl  = row.querySelector('.course-sel');
+        if (!courseEl) { return; }
+        courseEl.querySelectorAll('option[data-faculty]').forEach(function(opt) {
             opt.style.display = (!chosen || opt.dataset.faculty === chosen) ? '' : 'none';
         });
-
-        // Reset selection if current choice is now hidden
-        const current = courseEl.options[courseEl.selectedIndex];
-        if (current && current.style.display === 'none') {
-            courseEl.value = '';
-        }
+        var current = courseEl.options[courseEl.selectedIndex];
+        if (current && current.style.display === 'none') { courseEl.value = ''; }
     });
-    // Trigger on load to restore saved state
+    // Restore saved state on load
     sel.dispatchEvent(new Event('change'));
+}
+document.querySelectorAll('.course-row').forEach(function(row) {
+    bindFacultyFilter(row);
 });
+
+// ── Renumber all course rows ──────────────────────────────────────────────
+function renumberCourseRows() {
+    var rows = document.querySelectorAll('#courseRows .course-row');
+    rows.forEach(function(row, idx) {
+        var badge = row.querySelector('.row-num');
+        if (badge) { badge.textContent = idx + 1; }
+        // Show/hide remove button: first row has no remove button (or hide it)
+        var rmBtn = row.querySelector('.remove-course-row');
+        if (rmBtn) { rmBtn.style.display = idx > 0 ? '' : 'none'; }
+    });
+}
+
+// ── Add Course row ────────────────────────────────────────────────────────
+var addCourseBtn = document.getElementById('addCourse');
+if (addCourseBtn) {
+    addCourseBtn.addEventListener('click', function() {
+        // Clone first row as template
+        var template = document.querySelector('#courseRows .course-row');
+        if (!template) { return; }
+        var newRow = template.cloneNode(true);
+
+        // Reset values
+        newRow.querySelectorAll('select').forEach(function(s) { s.value = ''; });
+        newRow.querySelectorAll('option[data-faculty]').forEach(function(o) {
+            o.style.display = '';
+        });
+
+        // Ensure remove button exists and is visible
+        var rmBtn = newRow.querySelector('.remove-course-row');
+        if (!rmBtn) {
+            // Create remove button
+            var colDiv = document.createElement('div');
+            colDiv.className = 'col-auto';
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn btn-sm btn-outline-danger remove-course-row';
+            btn.innerHTML = '<i class="bi bi-trash"></i>';
+            colDiv.appendChild(btn);
+            newRow.appendChild(colDiv);
+        } else {
+            rmBtn.style.display = '';
+        }
+
+        document.getElementById('courseRows').appendChild(newRow);
+        bindFacultyFilter(newRow);
+        renumberCourseRows();
+        bindRemoveCourseRows();
+    });
+}
+
+// ── Remove Course row ─────────────────────────────────────────────────────
+function bindRemoveCourseRows() {
+    document.querySelectorAll('.remove-course-row').forEach(function(btn) {
+        btn.onclick = function() {
+            btn.closest('.course-row').remove();
+            renumberCourseRows();
+        };
+    });
+}
+bindRemoveCourseRows();
 
 // ── "Currently employed" checkbox disables end-date ───────────────────────
 function bindCurrentCheckboxes() {

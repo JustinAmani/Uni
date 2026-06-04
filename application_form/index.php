@@ -65,12 +65,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // ── Step 2: save courses, no validation ───────────────────────────
         case 2:
+            $courseNames     = $_POST['course_name']   ?? [];
+            $courseFaculties = $_POST['faculty_code']  ?? [];
             $courses = [];
-            for ($i = 1; $i <= 3; $i++) {
-                $name    = sanitize($_POST["course_{$i}"] ?? '');
-                $faculty = sanitize($_POST["faculty_{$i}"] ?? '');
-                if ($name) {
-                    $courses[] = ['name' => $name, 'faculty' => $faculty];
+            foreach ($courseNames as $i => $name) {
+                if (trim($name)) {
+                    $courses[] = ['name' => sanitize($name), 'faculty' => sanitize($courseFaculties[$i] ?? '')];
                 }
             }
             saveCoursePreferences($appId, $courses);
@@ -289,7 +289,7 @@ while (count($oResults)   < 10) $oResults[]  = [];
 while (count($principal)  < 3) $principal[]  = [];
 while (count($subsidiary) < 4) $subsidiary[] = [];
 while (count($employment) < 1) $employment[] = [];
-while (count($courses)    < 3) $courses[]    = [];
+while (count($courses)    < 1) $courses[]    = [];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -641,39 +641,37 @@ require_once __DIR__ . '/../includes/navbar.php';
                 </div><!-- /section-block Course Level -->
 
                 <div class="section-block">
-                <h6 class="section-label">Courses Applied For <small style="text-transform:none;letter-spacing:0;font-weight:400">(in order of preference)</small></h6>
-                <div class="alert alert-info py-2 small mb-3">
-                    <i class="bi bi-info-circle me-1"></i>
-                    <strong>FBM</strong> – Faculty of Business &amp; Management &nbsp;|&nbsp;
-                    <strong>FICT</strong> – Faculty of Information &amp; Communication Technology &nbsp;|&nbsp;
-                    <strong>FSDE</strong> – Faculty of Sustainable Development &amp; Engineering
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="section-label mb-0">Courses Applied For <small style="text-transform:none;letter-spacing:0;font-weight:400">(in order of preference)</small></h6>
+                    <button type="button" class="btn btn-sm btn-udm-primary ms-2" id="addCourse">
+                        <i class="bi bi-plus-circle me-1"></i> Add Record
+                    </button>
                 </div>
 
-                <?php for ($i = 1; $i <= 3; $i++):
-                    $c = $courses[$i - 1] ?? [];
+                <div id="courseRows">
+                <?php foreach ($courses as $i => $c):
                     $cName = $c['course_name'] ?? '';
                     $cFac  = $c['faculty_code'] ?? '';
+                    $num   = $i + 1;
                 ?>
-                <div class="row g-2 mb-3 align-items-end">
+                <div class="course-row row g-2 mb-3 align-items-end">
                     <div class="col-auto">
-                        <span class="badge bg-udm fs-6 px-3 py-2"><?= $i ?></span>
+                        <span class="badge bg-udm fs-6 px-3 py-2 row-num"><?= $num ?></span>
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Faculty</label>
-                        <select name="faculty_<?= $i ?>" class="form-select faculty-select"
-                                data-index="<?= $i ?>">
+                        <select name="faculty_code[]" class="form-select faculty-sel">
                             <option value="">-- Select Faculty --</option>
-                            <?php foreach (FACULTIES as $code => $name): ?>
+                            <?php foreach (FACULTIES as $code => $fname): ?>
                                 <option value="<?= $code ?>" <?= $cFac === $code ? 'selected' : '' ?>>
-                                    <?= $code ?> – <?= $name ?>
+                                    <?= $code ?> – <?= $fname ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="col">
-                        <label class="form-label">Course <?= $i === 1 ? '<span class="text-danger">*</span>' : '' ?></label>
-                        <select name="course_<?= $i ?>" class="form-select course-select"
-                                id="courseSelect<?= $i ?>">
+                        <label class="form-label">Course</label>
+                        <select name="course_name[]" class="form-select course-sel">
                             <option value="">-- Select Course --</option>
                             <?php foreach (COURSES as $fac => $courseList): ?>
                                 <?php foreach ($courseList as $course): ?>
@@ -687,8 +685,16 @@ require_once __DIR__ . '/../includes/navbar.php';
                             <?php endforeach; ?>
                         </select>
                     </div>
+                    <?php if ($i > 0): ?>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-sm btn-outline-danger remove-course-row">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                    <?php endif; ?>
                 </div>
-                <?php endfor; ?>
+                <?php endforeach; ?>
+                </div><!-- /courseRows -->
                 </div><!-- /section-block Courses Applied For -->
             </div>
         </div>
