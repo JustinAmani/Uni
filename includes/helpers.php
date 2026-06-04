@@ -190,7 +190,10 @@ function handleDocumentUpload(int $appId, string $docType, array $file): array {
     $storedName = $appId . '_' . $docType . '_' . time() . '.' . $ext;
     $destDir = UPLOAD_DIR . $appId . '/';
     if (!is_dir($destDir)) {
-        mkdir($destDir, 0755, true);
+        if (!mkdir($destDir, 0777, true)) {
+            return ['success' => false, 'message' => 'Cannot create upload folder (check server permissions).'];
+        }
+        chmod($destDir, 0777);
     }
     $dest = $destDir . $storedName;
     if (!move_uploaded_file($file['tmp_name'], $dest)) {

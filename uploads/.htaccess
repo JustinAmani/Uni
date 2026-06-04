@@ -1,0 +1,5 @@
+# Block direct browser access to uploaded files
+Options -Indexes
+<FilesMatch "\.php$">
+    Deny from all
+</FilesMatch>
