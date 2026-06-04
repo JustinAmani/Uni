@@ -33,13 +33,16 @@ function getApplication(int $appId): ?array {
 
 function saveStep(int $appId, int $step, array $fields): void {
     $db = getDB();
+
+    // Convert empty strings to NULL so DATE/numeric columns don't reject them
+    $fields = array_map(fn($v) => ($v === '') ? null : $v, $fields);
+
     $sets = array_map(fn($k) => "$k = :$k", array_keys($fields));
     $sets[] = 'current_step = :current_step';
-    $fields['current_step'] = max($step + 1, getApplication($appId)['current_step'] ?? $step + 1);
+    $fields['current_step'] = max($step + 1, (int) (getApplication($appId)['current_step'] ?? $step));
     $fields['id'] = $appId;
     $sql = 'UPDATE applications SET ' . implode(', ', $sets) . ' WHERE id = :id';
-    $stmt = $db->prepare($sql);
-    $stmt->execute($fields);
+    $db->prepare($sql)->execute($fields);
 }
 
 function getCoursePreferences(int $appId): array {
@@ -154,8 +157,10 @@ function saveEmploymentRecords(int $appId, array $records): void {
     );
     foreach ($records as $i => $r) {
         if (!empty($r['employer'])) {
+            $startDate = !empty($r['start_date']) ? $r['start_date'] : null;
+            $endDate   = !empty($r['end_date'])   ? $r['end_date']   : null;
             $stmt->execute([$appId, $r['employer'], $r['title'] ?? '',
-                $r['start_date'] ?? null, $r['end_date'] ?? null,
+                $startDate, $endDate,
                 isset($r['is_current']) ? 1 : 0,
                 $r['responsibilities'] ?? null, $i]);
         }
