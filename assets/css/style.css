@@ -1,13 +1,16 @@
 /* ── UdM Application Portal – Custom Styles ─────────────────────────────── */
 
 :root {
-    --udm-teal:       #1aaa96;
-    --udm-teal-dark:  #148a78;
-    --udm-teal-light: #e8f7f5;
-    --udm-title:      #0f8a78;
-    --udm-border:     #d0ebe7;
-    --udm-bg:         #f7fafa;
-    --udm-text:       #1c3a36;
+    --udm-teal:         #1aaa96;
+    --udm-teal-dark:    #148a78;
+    --udm-teal-light:   #e8f7f5;
+    --udm-title:        #0f8a78;
+    --udm-border:       #d0ebe7;
+    --udm-bg:           #f4f8fa;
+    --udm-text:         #1c3a36;
+    /* UdM blue from logo shield – used for section labels */
+    --udm-blue:         #1a6fa8;
+    --udm-blue-light:   #deedf8;  /* sky blue section background */
 }
 
 /* ────────────────── Base ────────────────────────────────────────────────── */
@@ -25,11 +28,16 @@ body {
     min-height: 64px;
 }
 
-/* The real UdM logo – full colours on white navbar */
+/* The real UdM logo – sits flat on the white navbar, no box around it */
 .udm-navbar .udm-logo-img {
-    height: 52px;
+    height: 54px;
     width: auto;
     object-fit: contain;
+    background: #ffffff;   /* same as navbar so no visible boundary */
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    display: block;
 }
 
 /* Right-side welcome text – dark, not white */
@@ -208,16 +216,20 @@ body {
 }
 /* Keep existing udm-card-header for auth cards */
 
-/* Section labels inside cards */
+/* Section labels – sky-blue block, NO separator line, matching UdM blue */
 .section-label {
+    display: block;
+    width: 100%;
     font-size: .7rem;
-    font-weight: 800;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: .08em;
-    color: var(--udm-teal-dark);
-    padding-bottom: .35rem;
-    border-bottom: 2px solid var(--udm-border);
+    letter-spacing: .07em;
+    color: var(--udm-blue);
+    background: var(--udm-blue-light);
+    padding: .42rem .85rem;
+    border-radius: 4px;
     margin-bottom: 1rem;
+    border: none;        /* no bottom line */
 }
 
 /* Input focus ring */
