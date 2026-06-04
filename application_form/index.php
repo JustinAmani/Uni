@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'national_id'        => sanitize($_POST['national_id'] ?? ''),
                 'place_of_birth'     => sanitize($_POST['place_of_birth'] ?? ''),
                 'nationality'        => sanitize($_POST['nationality'] ?? ''),
-                'email'              => filter_var(trim($_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL),
+                'email'              => filter_var(trim($_SESSION['user_email'] ?? $_POST['email'] ?? ''), FILTER_SANITIZE_EMAIL),
                 'mobile_number'      => sanitize($_POST['mobile_number'] ?? ''),
                 'home_number'        => sanitize($_POST['home_number'] ?? ''),
                 'perm_address_line1' => sanitize($_POST['perm_address_line1'] ?? ''),
@@ -521,9 +521,14 @@ require_once __DIR__ . '/../includes/navbar.php';
                                value="<?= e($app['nationality'] ?? '') ?>" maxlength="100">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Email Address <span class="text-danger">*</span></label>
-                        <input type="email" name="email" class="form-control"
-                               value="<?= e($app['email'] ?? '') ?>" maxlength="255">
+                        <label class="form-label">
+                            Email Address <span class="text-danger">*</span>
+                            <i class="bi bi-lock-fill text-muted ms-1" style="font-size:.7rem"
+                               title="Filled from your account"></i>
+                        </label>
+                        <input type="email" name="email" class="form-control bg-light"
+                               value="<?= e($_SESSION['user_email'] ?? $app['email'] ?? '') ?>"
+                               maxlength="255" readonly>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
