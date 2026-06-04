@@ -411,10 +411,8 @@ require_once __DIR__ . '/../includes/navbar.php';
           id="stepForm">
         <input type="hidden" name="step" value="1">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header-form">
-                <h6 class="mb-0"><i class="bi bi-person me-1"></i> Step 1: Personal Information</h6>
-            </div>
             <div class="card-body">
+                <h6 class="step-heading"><i class="bi bi-person me-1"></i> Step 1: Personal Information</h6>
                 <div class="section-block">
                 <h6 class="section-label">Personal Details</h6>
                 <div class="row g-3">
@@ -612,10 +610,8 @@ require_once __DIR__ . '/../includes/navbar.php';
     <form method="POST" action="<?= APP_URL ?>/application_form/index.php" novalidate id="stepForm">
         <input type="hidden" name="step" value="2">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header-form">
-                <h6 class="mb-0"><i class="bi bi-book me-1"></i> Step 2: Course Preferences</h6>
-            </div>
             <div class="card-body">
+                <h6 class="step-heading"><i class="bi bi-book me-1"></i> Step 2: Course Preferences</h6>
                 <div class="section-block">
                 <h6 class="section-label">Course Level &amp; Year of Entry</h6>
                 <div class="row g-3">
@@ -704,10 +700,8 @@ require_once __DIR__ . '/../includes/navbar.php';
     <form method="POST" action="<?= APP_URL ?>/application_form/index.php" novalidate id="stepForm">
         <input type="hidden" name="step" value="3">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header-form">
-                <h6 class="mb-0"><i class="bi bi-mortarboard me-1"></i> Step 3: Education Details</h6>
-            </div>
             <div class="card-body">
+                <h6 class="step-heading"><i class="bi bi-mortarboard me-1"></i> Step 3: Education Details</h6>
 
                 <!-- 3a: Secondary Schools -->
                 <div class="section-block">
@@ -822,10 +816,8 @@ require_once __DIR__ . '/../includes/navbar.php';
     <form method="POST" action="<?= APP_URL ?>/application_form/index.php" novalidate id="stepForm">
         <input type="hidden" name="step" value="4">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header-form">
-                <h6 class="mb-0"><i class="bi bi-briefcase me-1"></i> Step 4: Employment History</h6>
-            </div>
             <div class="card-body">
+                <h6 class="step-heading"><i class="bi bi-briefcase me-1"></i> Step 4: Employment History</h6>
             <div class="section-block">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <h6 class="section-label mb-0">Employment Records</h6>
@@ -898,10 +890,8 @@ require_once __DIR__ . '/../includes/navbar.php';
           enctype="multipart/form-data" novalidate id="stepForm">
         <input type="hidden" name="step" value="5">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header-form">
-                <h6 class="mb-0"><i class="bi bi-cloud-upload me-1"></i> Step 5: Document Upload</h6>
-            </div>
             <div class="card-body">
+                <h6 class="step-heading"><i class="bi bi-cloud-upload me-1"></i> Step 5: Document Upload</h6>
                 <!-- Info text directly on blue background -->
                 <div class="alert alert-info py-2 small mb-3">
                     <i class="bi bi-info-circle me-1"></i>
@@ -954,10 +944,8 @@ require_once __DIR__ . '/../includes/navbar.php';
     <form method="POST" action="<?= APP_URL ?>/application_form/index.php" novalidate id="stepForm">
         <input type="hidden" name="step" value="6">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header-form">
-                <h6 class="mb-0"><i class="bi bi-credit-card me-1"></i> Step 6: Application Fee Payment</h6>
-            </div>
             <div class="card-body">
+                <h6 class="step-heading"><i class="bi bi-credit-card me-1"></i> Step 6: Application Fee Payment</h6>
             <div class="section-block">
                 <div class="row justify-content-center">
                     <div class="col-md-7">
@@ -1011,10 +999,8 @@ require_once __DIR__ . '/../includes/navbar.php';
     <form method="POST" action="<?= APP_URL ?>/application_form/index.php" novalidate id="stepForm">
         <input type="hidden" name="step" value="7">
         <div class="card shadow-sm border-0 mb-3">
-            <div class="card-header udm-card-header-form">
-                <h6 class="mb-0"><i class="bi bi-pen me-1"></i> Step 7: Declaration and Submission</h6>
-            </div>
             <div class="card-body">
+                <h6 class="step-heading"><i class="bi bi-pen me-1"></i> Step 7: Declaration and Submission</h6>
                 <div class="record-block mb-3">
                     <h6 class="section-label">Applicant Declaration</h6>
                     <p class="mb-3">
