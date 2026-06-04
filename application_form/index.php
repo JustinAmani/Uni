@@ -1029,7 +1029,8 @@ require_once __DIR__ . '/../includes/navbar.php';
 </div><!-- /container -->
 
 <?php
-$extraScripts = '<script src="' . APP_URL . '/assets/js/form.js"></script>';
+$jsVer = filemtime(__DIR__ . '/../assets/js/form.js');
+$extraScripts = '<script src="' . APP_URL . '/assets/js/form.js?v=' . $jsVer . '"></script>';
 require_once __DIR__ . '/../includes/footer.php';
 ?>
 
