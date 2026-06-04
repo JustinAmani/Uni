@@ -44,10 +44,12 @@ function loginUser(string $email, string $password): array {
 
     startSession();
     session_regenerate_id(true);
-    $_SESSION['user_id']        = $user['id'];
-    $_SESSION['user_email']     = $user['email'];
-    $_SESSION['user_role']      = $user['role'];
-    $_SESSION['user_name']      = trim($user['first_name'] . ' ' . $user['last_name']);
+    $_SESSION['user_id']         = $user['id'];
+    $_SESSION['user_email']      = $user['email'];
+    $_SESSION['user_role']       = $user['role'];
+    $_SESSION['user_name']       = trim($user['first_name'] . ' ' . $user['last_name']);
+    $_SESSION['user_first_name'] = $user['first_name'];
+    $_SESSION['user_last_name']  = $user['last_name'];
 
     return ['success' => true, 'role' => $user['role']];
 }
@@ -103,6 +105,16 @@ function getCurrentUserName(): string {
 function getCurrentUserRole(): string {
     startSession();
     return $_SESSION['user_role'] ?? '';
+}
+
+function getCurrentUserFirstName(): string {
+    startSession();
+    return $_SESSION['user_first_name'] ?? '';
+}
+
+function getCurrentUserLastName(): string {
+    startSession();
+    return $_SESSION['user_last_name'] ?? '';
 }
 
 function sanitize(string $value): string {

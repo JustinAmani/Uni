@@ -30,11 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // ── Step 1: save everything, no validation ────────────────────────
         case 1:
             $dob = $_POST['date_of_birth'] ?? '';
+            // Always use account names (cannot be changed by the applicant)
+            $sessionFirst = getCurrentUserFirstName() ?: explode(' ', getCurrentUserName(), 2)[0] ?? '';
+            $sessionLast  = getCurrentUserLastName()  ?: (explode(' ', getCurrentUserName(), 2)[1] ?? '');
             $v = [
                 'title'              => sanitize($_POST['title'] ?? ''),
-                'first_name'         => sanitize($_POST['first_name'] ?? ''),
+                'first_name'         => sanitize($sessionFirst ?: ($_POST['first_name'] ?? '')),
                 'middle_name'        => sanitize($_POST['middle_name'] ?? ''),
-                'last_name'          => sanitize($_POST['last_name'] ?? ''),
+                'last_name'          => sanitize($sessionLast  ?: ($_POST['last_name'] ?? '')),
                 'maiden_name'        => sanitize($_POST['maiden_name'] ?? ''),
                 'gender'             => sanitize($_POST['gender'] ?? ''),
                 'date_of_birth'      => $dob,
@@ -262,6 +265,23 @@ $app         = getApplication($appId);
 $isMinor     = !empty($app['date_of_birth']) && !isOver18($app['date_of_birth']);
 $submitted   = isset($_GET['submitted']);
 
+// Pre-fill First/Last Name from account – always locked (read-only for applicants)
+$lockedFirst = getCurrentUserFirstName();
+$lockedLast  = getCurrentUserLastName();
+// If not in session yet (old session), derive from user_name
+if (empty($lockedFirst) && !empty(getCurrentUserName())) {
+    $parts = explode(' ', getCurrentUserName(), 2);
+    $lockedFirst = $parts[0] ?? '';
+    $lockedLast  = $parts[1] ?? '';
+}
+// Always sync to app data so they're saved on Next
+if (empty($app['first_name']) && !empty($lockedFirst)) {
+    $app['first_name'] = $lockedFirst;
+}
+if (empty($app['last_name']) && !empty($lockedLast)) {
+    $app['last_name'] = $lockedLast;
+}
+
 // Step-level errors (only shown on step 7)
 $errors       = $_SESSION['form_errors'] ?? [];
 $submitErrors = $_SESSION['submit_errors'] ?? [];   // array keyed by step number
@@ -428,9 +448,14 @@ require_once __DIR__ . '/../includes/navbar.php';
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">First Name <span class="text-danger">*</span></label>
-                        <input type="text" name="first_name" class="form-control"
-                               value="<?= e($app['first_name'] ?? '') ?>" maxlength="100">
+                        <label class="form-label">
+                            First Name <span class="text-danger">*</span>
+                            <i class="bi bi-lock-fill text-muted ms-1" style="font-size:.7rem"
+                               title="Filled from your account"></i>
+                        </label>
+                        <input type="text" name="first_name" class="form-control bg-light"
+                               value="<?= e($lockedFirst ?: ($app['first_name'] ?? '')) ?>"
+                               maxlength="100" readonly>
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Middle Name</label>
@@ -438,9 +463,14 @@ require_once __DIR__ . '/../includes/navbar.php';
                                value="<?= e($app['middle_name'] ?? '') ?>" maxlength="100">
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Last Name <span class="text-danger">*</span></label>
-                        <input type="text" name="last_name" class="form-control"
-                               value="<?= e($app['last_name'] ?? '') ?>" maxlength="100">
+                        <label class="form-label">
+                            Last Name <span class="text-danger">*</span>
+                            <i class="bi bi-lock-fill text-muted ms-1" style="font-size:.7rem"
+                               title="Filled from your account"></i>
+                        </label>
+                        <input type="text" name="last_name" class="form-control bg-light"
+                               value="<?= e($lockedLast ?: ($app['last_name'] ?? '')) ?>"
+                               maxlength="100" readonly>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Maiden Name <span class="text-muted small">(if married)</span></label>
