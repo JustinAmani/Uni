@@ -23,19 +23,7 @@ $pageTitle = 'Welcome';
 </head>
 <body class="landing-page d-flex flex-column min-vh-100">
 
-<!-- Navbar -->
-<nav class="navbar udm-navbar">
-    <div class="container">
-        <a class="navbar-brand d-flex align-items-center gap-3" href="#">
-            <img src="<?= APP_URL ?>/assets/img/logo.svg" alt="UdM Shield" height="52"
-                 onerror="this.style.display='none'">
-            <div>
-                <div class="udm-brand-name">UNIVERSITÉ DES MASCAREIGNES</div>
-                <div class="udm-tagline">SAVOIR, C'EST POUVOIR</div>
-            </div>
-        </a>
-    </div>
-</nav>
+<?php require_once __DIR__ . '/../includes/navbar.php'; ?>
 
 <!-- Hero Banner -->
 <div class="udm-hero py-4">

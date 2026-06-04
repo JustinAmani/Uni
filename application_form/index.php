@@ -274,28 +274,17 @@ while (count($courses)    < 3) $courses[]    = [];
 <head><?php require_once __DIR__ . '/../includes/head.php'; ?></head>
 <body class="app-form-page">
 
-<!-- Top Navigation -->
-<nav class="navbar udm-navbar">
-    <div class="container-fluid px-4">
-        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-            <img src="<?= APP_URL ?>/assets/img/logo.svg" alt="UdM" height="44"
-                 onerror="this.style.display='none'">
-            <div>
-                <div class="udm-brand-name">UNIVERSITÉ DES MASCAREIGNES</div>
-                <div class="udm-tagline">SAVOIR, C'EST POUVOIR</div>
-            </div>
-        </a>
-        <div class="d-flex align-items-center gap-3 ms-auto">
-            <span class="text-white small">
-                Welcome, <strong><?= e(getCurrentUserName()) ?></strong>
-                <span class="badge bg-light text-dark ms-1"><?= e($app['app_number']) ?></span>
-            </span>
-            <a href="<?= APP_URL ?>/auth/logout.php" class="btn btn-sm btn-outline-light">
-                <i class="bi bi-box-arrow-right me-1"></i> Logout
-            </a>
-        </div>
-    </div>
-</nav>
+<?php
+$navRight = '
+    <span class="text-white small">
+        Welcome, <strong>' . e(getCurrentUserName()) . '</strong>
+        <span class="badge bg-white text-dark ms-1">' . e($app['app_number']) . '</span>
+    </span>
+    <a href="' . APP_URL . '/auth/logout.php" class="btn btn-sm btn-outline-light">
+        <i class="bi bi-box-arrow-right me-1"></i> Logout
+    </a>';
+require_once __DIR__ . '/../includes/navbar.php';
+?>
 
 <div class="container py-4">
 

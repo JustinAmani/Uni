@@ -30,30 +30,18 @@ $pageTitle = 'Agent Dashboard';
 <head><?php require_once __DIR__ . '/../includes/head.php'; ?></head>
 <body>
 
-<nav class="navbar udm-navbar">
-    <div class="container-fluid px-4">
-        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-            <img src="<?= APP_URL ?>/assets/img/logo.svg" alt="UdM" height="44"
-                 onerror="this.style.display='none'">
-            <div>
-                <div class="udm-brand-name">UNIVERSITÉ DES MASCAREIGNES</div>
-                <div class="udm-tagline">SAVOIR, C'EST POUVOIR</div>
-            </div>
-        </a>
-        <div class="ms-auto d-flex align-items-center gap-3">
-            <span class="text-white small">
-                <i class="bi bi-person-badge me-1"></i>
-                <?= e(getCurrentUserName()) ?>
-                <span class="badge bg-warning text-dark ms-1">
-                    <?= ucfirst(getCurrentUserRole()) ?>
-                </span>
-            </span>
-            <a href="<?= APP_URL ?>/auth/logout.php" class="btn btn-sm btn-outline-light">
-                <i class="bi bi-box-arrow-right me-1"></i> Logout
-            </a>
-        </div>
-    </div>
-</nav>
+<?php
+$navRight = '
+    <span class="text-white small">
+        <i class="bi bi-person-badge me-1"></i>
+        ' . e(getCurrentUserName()) . '
+        <span class="badge bg-warning text-dark ms-1">' . ucfirst(getCurrentUserRole()) . '</span>
+    </span>
+    <a href="' . APP_URL . '/auth/logout.php" class="btn btn-sm btn-outline-light">
+        <i class="bi bi-box-arrow-right me-1"></i> Logout
+    </a>';
+require_once __DIR__ . '/../includes/navbar.php';
+?>
 
 <div class="container-fluid px-4 py-4">
 
